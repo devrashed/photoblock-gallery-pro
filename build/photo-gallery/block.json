@@ -1,0 +1,36 @@
+{
+  "apiVersion": 2,
+  "name": "myplugin/photo-gallery",
+  "title": "Photo Gallery",
+  "category": "media",
+  "icon": "format-gallery",
+  "description": "A clean, responsive image grid gallery block.",
+  "attributes": {
+    "images": {
+      "type": "array",
+      "default": []
+    },
+    "maxRows": {
+      "type": "number",
+      "default": 3
+    },
+    "gap": {
+      "type": "number",
+      "default": 16
+    },
+    "showCaptions": {
+      "type": "boolean",
+      "default": true
+    },
+    "layout": {
+      "type": "string",
+      "default": "grid"
+    }
+  },
+  "supports": {
+    "html": true
+  },
+  "editorScript": "file:./index.js",
+  "style": "photo-gallery-style",
+  "editorStyle": "photo-gallery-editor"
+}

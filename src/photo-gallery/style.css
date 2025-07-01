@@ -1,0 +1,66 @@
+/* .my-gallery__grid {
+  display: grid;
+  gap: 15px;
+} */
+
+.my-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 3), 1fr);
+  gap: var(--gap, 16px);
+}
+
+/* layout grid */
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 3), 1fr);
+  gap: var(--gap, 16px);
+}
+
+.layout-masonry {
+  column-count: var(--columns, 3);
+  column-gap: var(--gap, 16px);
+}
+
+.layout-masonry .my-gallery__item {
+  break-inside: avoid;
+  margin-bottom: var(--gap, 16px);
+}
+
+/* end layout grid */
+
+
+
+
+.my-gallery.columns-2 .my-gallery__grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+.my-gallery.columns-3 .my-gallery__grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+.my-gallery.columns-4 .my-gallery__grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+.my-gallery.columns-5 .my-gallery__grid {
+  grid-template-columns: repeat(5, 1fr);
+}
+.my-gallery.columns-6 .my-gallery__grid {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.my-gallery__item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.my-gallery__item {
+  overflow: hidden;
+  position: relative;
+}
+.my-gallery__item figcaption {
+  text-align: center;
+  font-size: 0.85em;
+  margin-top: 0.5em;
+}
