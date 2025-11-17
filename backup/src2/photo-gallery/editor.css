@@ -1,0 +1,57 @@
+
+.wpct_gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 3), 1fr);
+  gap: var(--gap, 16px);
+}
+
+/* layout grid */
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 3), 1fr);
+  gap: var(--gap, 16px);
+}
+
+.layout-masonry {
+  column-count: var(--columns, 3);
+  column-gap: var(--gap, 16px);
+}
+
+.layout-masonry .wpct_gallery__item {
+  break-inside: avoid;
+  margin-bottom: var(--gap, 16px);
+}
+
+/* end layout grid */
+
+.wpct_gallery__item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.wpct_gallery__item {
+  overflow: hidden;
+  position: relative;
+}
+
+.wpct_gallery__item figcaption {
+  text-align: center;
+  font-size: 0.85em;
+  margin-top: 0.5em;
+}
+
+/* Optional: Max 3 rows visual control */
+.wpct_gallery__grid {
+  max-height: calc(3 * 180px + 2 * 16px); /* 3 rows * height + 2 gaps */
+  overflow-y: auto;
+}
+
+/* paigination */
+
+.wpct_gallery__pagination .components-button {
+  min-width: 32px;
+}

@@ -1,16 +1,18 @@
 {
   "apiVersion": 2,
-  "name": "myplugin/photo-gallery",
-  "title": "Photo Gallery",
+  "name": "photogallery/photo-gallery",
+  "title": "PhotoBlocks Gallery",
+  "version": "1.0.0",
+  "textdomain": "photoblocks-gallery",
   "category": "media",
   "icon": "format-gallery",
-  "description": "A clean, responsive image grid gallery block.",
+  "description": "A powerful Gutenberg block for creating responsive",
   "attributes": {
     "images": {
       "type": "array",
       "default": []
     },
-    "maxRows": {
+    "columns": {
       "type": "number",
       "default": 3
     },
@@ -22,15 +24,49 @@
       "type": "boolean",
       "default": true
     },
-    "layout": {
+    "imageSize": {
+      "type": "string",
+      "default": "full"
+    },
+    "customWidth": {
+      "type": "number",
+      "default": 0
+    },
+    "customHeight": {
+      "type": "number",
+      "default": 0
+    },
+    "layoutType": {
       "type": "string",
       "default": "grid"
+    },
+    "showPagination": {
+      "type": "boolean",
+      "default": false
+    },
+    "itemsPerPage": {
+      "type": "number",
+      "default": 12
+    },
+    "currentPage": {
+      "type": "number",
+      "default": 1
+    },
+    "align": {
+      "type": "string",
+      "default": "center"
     }
   },
   "supports": {
-    "html": true
+    "html": false,
+    "align": [
+      "left",
+      "right",
+      "full",
+      "wide"
+    ]
   },
   "editorScript": "file:./index.js",
-  "style": "photo-gallery-style",
-  "editorStyle": "photo-gallery-editor"
+  "editorStyle": "photo-gallery-editor",
+  "style": "photo-gallery-style-frontend"
 }

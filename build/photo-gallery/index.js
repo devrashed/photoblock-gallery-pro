@@ -33,67 +33,693 @@ function Edit({
 }) {
   const {
     images = [],
-    maxRows = 3,
+    columns = 3,
     gap = 16,
     showCaptions = true,
-    layout = 'grid'
+    imageSize = 'full',
+    customWidth = 0,
+    customHeight = 0,
+    layoutType = 'grid',
+    showPagination = false,
+    itemsPerPage = 12,
+    currentPage = 1,
+    // Image Browser specific attributes
+    browserCurrentImage = 0,
+    browserShowThumbnails = true,
+    browserShowNavigation = true,
+    browserShowCounter = true,
+    browserAutoFullscreen = false,
+    browserZoomEnabled = true,
+    ImgbackgroundColor = '#000000',
+    ImgCaptionColor = '#ffffff',
+    // Masonry specific attributes
+    masonryBorderRadius = 8,
+    masonryImageBorder = 0,
+    masonryImageBorderColor = '#e0e0e0',
+    masonryImageBorderStyle = 'solid',
+    // NEW STYLE ATTRIBUTES
+    // Grid Style attributes
+    gridBackgroundColor = '#000000',
+    grindCaptionColor = '#ffffff',
+    GtBgap = 0,
+    // Lightbox Style attributes
+    lightboxOverlayColor = 'rgba(0, 0, 0, 0.8)',
+    lightboxIconColor = '#ffffff',
+    lightboxHoverScale = 1.05,
+    LightBackgroundColor = '#000000',
+    LightCaptionColor = '#ffffff',
+    LighttBgap = 0,
+    // Masonry Style attributes (additional to existing)
+    masonryHoverEffect = 'lift',
+    masonryImageOpacity = 1,
+    // Infinite Carousel attributes
+    alignx = 'center'
   } = attributes;
-  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps)();
   const onSelect = newImages => {
     setAttributes({
       images: newImages.map(img => ({
         id: img.id,
         url: img.url,
         alt: img.alt,
-        caption: img.caption
-      }))
+        caption: img.caption,
+        sizes: img.sizes || {}
+      })),
+      currentPage: 1,
+      currentSlide: 0,
+      browserCurrentImage: 0
+    });
+  };
+
+  // Pagination image slice
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const imagesToDisplay = showPagination ? images.slice(startIndex, endIndex) : images;
+
+  // Calculate total pages for pagination
+  const totalPages = Math.ceil(images.length / itemsPerPage);
+
+  // Handle image browser navigation
+  const handleBrowserImageChange = imageIndex => {
+    setAttributes({
+      browserCurrentImage: imageIndex
+    });
+  };
+  const nextBrowserImage = () => {
+    const nextIndex = (browserCurrentImage + 1) % images.length;
+    setAttributes({
+      browserCurrentImage: nextIndex
+    });
+  };
+  const prevBrowserImage = () => {
+    const prevIndex = browserCurrentImage === 0 ? images.length - 1 : browserCurrentImage - 1;
+    setAttributes({
+      browserCurrentImage: prevIndex
     });
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
-        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Gallery Settings'),
-        initialOpen: true,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Max Rows'),
-          value: maxRows,
-          onChange: value => setAttributes({
-            maxRows: value
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.BlockControls, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarGroup, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+          icon: "grid-view",
+          isPressed: layoutType === 'grid',
+          onClick: () => setAttributes({
+            layoutType: 'grid'
           }),
-          min: 1,
-          max: 5
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Space Between Images'),
-          value: gap,
-          onChange: value => setAttributes({
-            gap: value
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Grid', 'photoblocks-gallery')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+          icon: "format-gallery",
+          isPressed: layoutType === 'lightbox',
+          onClick: () => setAttributes({
+            layoutType: 'lightbox'
           }),
-          min: 8,
-          max: 100
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Show Captions'),
-          checked: showCaptions,
-          onChange: value => setAttributes({
-            showCaptions: value
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Gallery Layout'),
-          value: layout,
-          options: [{
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Grid'),
-            value: 'grid'
-          }, {
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Masonry'),
-            value: 'masonry'
-          }],
-          onChange: value => setAttributes({
-            layout: value
-          })
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Lightbox', 'photoblocks-gallery')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+          icon: "schedule",
+          isPressed: layoutType === 'masonry',
+          onClick: () => setAttributes({
+            layoutType: 'masonry'
+          }),
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Masonry', 'photoblocks-gallery')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+          icon: "cover-image",
+          isPressed: layoutType === 'imagebrowser',
+          onClick: () => setAttributes({
+            layoutType: 'imagebrowser'
+          }),
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Browser', 'photoblocks-gallery')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+          icon: "cover-image",
+          isPressed: layoutType === 'infinite',
+          onClick: () => setAttributes({
+            layoutType: 'infinite'
+          }),
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Infinite Carousel', 'photoblocks-gallery')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+          icon: "cover-image",
+          disabled: true,
+          children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Wave Gallery', 'photoblocks-gallery'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            className: "pro-badge",
+            children: "PRO"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+          icon: "cover-image",
+          disabled: true,
+          children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Center', 'photoblocks-gallery'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            className: "pro-badge",
+            children: "PRO"
+          })]
         })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "tab-content-settings",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Layout & Display'),
+          initialOpen: true,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Gallery Layout'),
+            value: layoutType,
+            options: [{
+              label: 'Grid Layout',
+              value: 'grid'
+            }, {
+              label: 'Lightbox Layout',
+              value: 'lightbox'
+            }, {
+              label: 'Image browser Layout',
+              value: 'imagebrowser'
+            }, {
+              label: 'Masonry Layout',
+              value: 'masonry'
+            }, {
+              label: 'Infinite Carousel',
+              value: 'infinite'
+            }, {
+              label: 'Wave Gallery (PRO 🔒)',
+              value: 'wave',
+              disabled: true
+            }, {
+              label: 'Image Center (PRO 🔒)',
+              value: 'center',
+              disabled: true
+            }],
+            onChange: value => setAttributes({
+              layoutType: value
+            })
+          }), layoutType !== 'infinite' && layoutType !== 'imagebrowser' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Images Per Row'),
+            value: columns,
+            onChange: value => setAttributes({
+              columns: value
+            }),
+            min: 1,
+            max: 6
+          }), layoutType !== 'imagebrowser' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Space Between Images'),
+            value: gap,
+            onChange: value => setAttributes({
+              gap: value
+            }),
+            min: 8,
+            max: 100
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Show Captions'),
+            checked: showCaptions,
+            onChange: value => setAttributes({
+              showCaptions: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Size'),
+            value: imageSize,
+            options: [{
+              label: 'Full Size',
+              value: 'full'
+            }, {
+              label: 'Large',
+              value: 'large'
+            }, {
+              label: 'Medium',
+              value: 'medium'
+            }, {
+              label: 'Thumbnail',
+              value: 'thumbnail'
+            }, {
+              label: 'Custom',
+              value: 'custom'
+            }],
+            onChange: value => setAttributes({
+              imageSize: value
+            })
+          }), imageSize === 'custom' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Custom Width (px)'),
+              value: customWidth,
+              onChange: value => setAttributes({
+                customWidth: value
+              }),
+              min: 50,
+              max: 1200
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Custom Height (px)'),
+              value: customHeight,
+              onChange: value => setAttributes({
+                customHeight: value
+              }),
+              min: 50,
+              max: 1200
+            })]
+          }), (layoutType === 'grid' || layoutType === 'lightbox' || layoutType === 'masonry') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Pagination Show'),
+              checked: showPagination,
+              onChange: value => setAttributes({
+                showPagination: value,
+                currentPage: 1
+              })
+            }), showPagination && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Items Per Page'),
+              value: itemsPerPage,
+              options: [{
+                label: '4',
+                value: 4
+              }, {
+                label: '8',
+                value: 8
+              }, {
+                label: '12',
+                value: 12
+              }, {
+                label: '16',
+                value: 16
+              }, {
+                label: '20',
+                value: 20
+              }],
+              onChange: value => setAttributes({
+                itemsPerPage: parseInt(value, 10),
+                currentPage: 1
+              })
+            })]
+          })]
+        }), layoutType === 'imagebrowser' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Browser Settings'),
+          initialOpen: true,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Show Thumbnails'),
+            checked: browserShowThumbnails,
+            onChange: value => setAttributes({
+              browserShowThumbnails: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Show Navigation Arrows'),
+            checked: browserShowNavigation,
+            onChange: value => setAttributes({
+              browserShowNavigation: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Show Image Counter'),
+            checked: browserShowCounter,
+            onChange: value => setAttributes({
+              browserShowCounter: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Enable Zoom & Pan'),
+            checked: browserZoomEnabled,
+            onChange: value => setAttributes({
+              browserZoomEnabled: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Auto Fullscreen Mode'),
+            checked: browserAutoFullscreen,
+            onChange: value => setAttributes({
+              browserAutoFullscreen: value
+            })
+          })]
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
+      group: "styles",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "tab-content-styles",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+          title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Appearance'),
+          initialOpen: true,
+          children: [layoutType === 'grid' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Background Color')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "color",
+                value: gridBackgroundColor,
+                onChange: e => setAttributes({
+                  gridBackgroundColor: e.target.value
+                }),
+                style: {
+                  width: '100%',
+                  height: '32px',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Text Color')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "color",
+                value: grindCaptionColor,
+                onChange: e => setAttributes({
+                  grindCaptionColor: e.target.value
+                }),
+                style: {
+                  width: '100%',
+                  height: '32px',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('padding')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+                label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Top Bottom Padding (px)'),
+                value: GtBgap,
+                onChange: value => setAttributes({
+                  GtBgap: value
+                }),
+                min: 0,
+                max: 100
+              })]
+            })]
+          }), layoutType === 'lightbox' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Background Color')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "color",
+                value: LightBackgroundColor,
+                onChange: e => setAttributes({
+                  LightBackgroundColor: e.target.value
+                }),
+                style: {
+                  width: '100%',
+                  height: '32px',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Text Color')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "color",
+                value: LightCaptionColor,
+                onChange: e => setAttributes({
+                  LightCaptionColor: e.target.value
+                }),
+                style: {
+                  width: '100%',
+                  height: '32px',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('padding')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+                label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Top Bottom Padding (px)'),
+                value: LighttBgap,
+                onChange: value => setAttributes({
+                  LighttBgap: value
+                }),
+                min: 0,
+                max: 100
+              })]
+            })]
+          }), layoutType === 'masonry' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Border Radius (px)'),
+              value: masonryBorderRadius,
+              onChange: value => setAttributes({
+                masonryBorderRadius: value
+              }),
+              min: 0,
+              max: 50
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Border Width (px)'),
+              value: masonryImageBorder,
+              onChange: value => setAttributes({
+                masonryImageBorder: value
+              }),
+              min: 0,
+              max: 20
+            }), masonryImageBorder > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+                label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Border Style'),
+                value: masonryImageBorderStyle,
+                options: [{
+                  label: 'Solid',
+                  value: 'solid'
+                }, {
+                  label: 'Dashed',
+                  value: 'dashed'
+                }, {
+                  label: 'Dotted',
+                  value: 'dotted'
+                }, {
+                  label: 'Double',
+                  value: 'double'
+                }],
+                onChange: value => setAttributes({
+                  masonryImageBorderStyle: value
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                style: {
+                  marginBottom: '16px'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                  style: {
+                    display: 'block',
+                    marginBottom: '4px',
+                    fontSize: '11px',
+                    fontWeight: '500',
+                    textTransform: 'uppercase'
+                  },
+                  children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Border Color')
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                  type: "color",
+                  value: masonryImageBorderColor,
+                  onChange: e => setAttributes({
+                    masonryImageBorderColor: e.target.value
+                  }),
+                  style: {
+                    width: '100%',
+                    height: '32px',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }
+                })]
+              })]
+            })]
+          }), layoutType === 'imagebrowser' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Background Color')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "color",
+                value: ImgbackgroundColor,
+                onChange: e => setAttributes({
+                  ImgbackgroundColor: e.target.value
+                }),
+                style: {
+                  width: '100%',
+                  height: '32px',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Caption Color')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "color",
+                value: ImgCaptionColor,
+                onChange: e => setAttributes({
+                  ImgCaptionColor: e.target.value
+                }),
+                style: {
+                  width: '100%',
+                  height: '32px',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }
+              })]
+            })]
+          }), layoutType === 'infinite' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Background Color')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "color",
+                value: ImgbackgroundColor,
+                onChange: e => setAttributes({
+                  ImgbackgroundColor: e.target.value
+                }),
+                style: {
+                  width: '100%',
+                  height: '32px',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Caption Color')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "color",
+                value: ImgCaptionColor,
+                onChange: e => setAttributes({
+                  ImgCaptionColor: e.target.value
+                }),
+                style: {
+                  width: '100%',
+                  height: '32px',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Caption Center')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
+                value: attributes.alignx,
+                onChange: e => setAttributes({
+                  alignx: e.target.value
+                }),
+                style: {
+                  width: '100%',
+                  height: '32px',
+                  borderRadius: '4px',
+                  border: '1px solid #ccc',
+                  cursor: 'pointer'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "left",
+                  children: "Left"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "center",
+                  children: "Center"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
+                  value: "right",
+                  children: "Right"
+                })]
+              })]
+            })]
+          })]
+        })
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
       ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps)({
-        className: "my-gallery"
+        className: 'my-gallery'
       }),
       children: images.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.MediaUploadCheck, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.MediaUpload, {
@@ -110,21 +736,229 @@ function Edit({
           })
         })
       }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-          className: `my-gallery__grid layout-${layout}`,
+        children: [layoutType === 'grid' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "wpct_gallery__grid",
           style: {
-            '--columns': maxRows,
+            '--columns': columns,
             '--gap': `${gap}px`
           },
-          children: images.slice(0, maxRows).map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("figure", {
-            className: "my-gallery__item",
+          children: imagesToDisplay.map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "wpct_gallery__item",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
-              src: img.url,
-              alt: img.alt
+              src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
+              alt: img.alt,
+              style: imageSize === 'custom' ? {
+                width: customWidth ? `${customWidth}px` : 'auto',
+                height: customHeight ? `${customHeight}px` : 'auto'
+              } : undefined
+            }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("figcaption", {
+              style: {
+                backgroundColor: gridBackgroundColor,
+                color: grindCaptionColor,
+                paddingTop: GtBgap,
+                paddingBottom: GtBgap
+              },
+              children: [" ", img.caption]
+            })]
+          }, img.id))
+        }), layoutType === 'lightbox' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "wpct_gallery__lightbox-grid",
+          style: {
+            '--columns': columns,
+            '--gap': `${gap}px`,
+            '--lightbox-overlay': lightboxOverlayColor,
+            '--lightbox-icon-color': lightboxIconColor,
+            '--lightbox-hover-scale': lightboxHoverScale
+          },
+          children: imagesToDisplay.map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "wpct_gallery__lightbox-item",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "wpct_gallery__lightbox-thumb",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
+                alt: img.alt,
+                style: imageSize === 'custom' ? {
+                  width: customWidth ? `${customWidth}px` : 'auto',
+                  height: customHeight ? `${customHeight}px` : 'auto'
+                } : undefined
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "wpct_gallery__lightbox-overlay",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "wpct_gallery__lightbox-icon",
+                  children: "\uD83D\uDD0D"
+                })
+              })]
             }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("figcaption", {
+              style: {
+                backgroundColor: LightBackgroundColor,
+                color: LightCaptionColor,
+                paddingTop: LighttBgap,
+                paddingBottom: LighttBgap
+              },
               children: img.caption
             })]
           }, img.id))
+        }), layoutType === 'masonry' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "wpct_gallery__masonry",
+          style: {
+            '--columns': columns,
+            '--gap': `${gap}px`,
+            '--border-radius': `${masonryBorderRadius}px`,
+            '--border-width': `${masonryImageBorder}px`,
+            '--border-color': masonryImageBorderColor,
+            '--border-style': masonryImageBorderStyle,
+            '--masonry-hover-effect': masonryHoverEffect,
+            '--masonry-opacity': masonryImageOpacity
+          },
+          children: imagesToDisplay.map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "wpct_gallery__masonry-item",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+              src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
+              alt: img.alt,
+              style: imageSize === 'custom' ? {
+                width: customWidth ? `${customWidth}px` : 'auto',
+                height: customHeight ? `${customHeight}px` : 'auto'
+              } : undefined
+            }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("figcaption", {
+              className: "wpct_gallery__masonry-caption",
+              children: img.caption
+            })]
+          }, img.id))
+        }), layoutType === 'imagebrowser' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "wpct_gallery__imagebrowser",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "wpct_gallery__imagebrowser-main",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "wpct_gallery__imagebrowser-viewer",
+              children: images.map((img, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: `wpct_gallery__browser-image ${index === browserCurrentImage ? 'active' : ''}`,
+                style: {
+                  display: index === browserCurrentImage ? 'block' : 'none'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                  src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
+                  alt: img.alt,
+                  style: imageSize === 'custom' ? {
+                    width: customWidth ? `${customWidth}px` : 'auto',
+                    height: customHeight ? `${customHeight}px` : 'auto'
+                  } : undefined
+                }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  className: "wpct_gallery__imagebrowser-caption",
+                  style: {
+                    backgroundColor: ImgbackgroundColor,
+                    color: ImgCaptionColor
+                  },
+                  children: img.caption
+                })]
+              }, img.id))
+            }), browserShowNavigation && images.length > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+                className: "wpct_gallery__imagebrowser-prev",
+                onClick: prevBrowserImage,
+                variant: "secondary",
+                children: "\u276E"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+                className: "wpct_gallery__imagebrowser-next",
+                onClick: nextBrowserImage,
+                variant: "secondary",
+                children: "\u276F"
+              })]
+            }), browserShowCounter && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "wpct_gallery__imagebrowser-counter",
+              children: [browserCurrentImage + 1, " of ", images.length]
+            }), browserZoomEnabled && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "wpct_gallery__imagebrowser-zoom-controls",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+                variant: "secondary",
+                className: "wpct_gallery__imagebrowser-zoom-in",
+                children: "\uD83D\uDD0D+"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+                variant: "secondary",
+                className: "wpct_gallery__imagebrowser-zoom-out",
+                children: "\uD83D\uDD0D-"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+                variant: "secondary",
+                className: "wpct_gallery__imagebrowser-zoom-reset",
+                children: "\u27F2"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "wpct_gallery__imagebrowser-fullscreen-control",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+                variant: "secondary",
+                className: "wpct_gallery__imagebrowser-fullscreen",
+                children: "\u26F6"
+              })
+            })]
+          }), browserShowThumbnails && images.length > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "wpct_gallery__imagebrowser-thumbnails",
+            children: images.map((img, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: `wpct_gallery__imagebrowser-thumb ${index === browserCurrentImage ? 'active' : ''}`,
+              onClick: () => handleBrowserImageChange(index),
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                src: img.sizes?.thumbnail?.url || img.url,
+                alt: img.alt
+              })
+            }, img.id))
+          })]
+        }), layoutType === 'infinite' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "wpg-section",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("article", {
+            className: "wpg-article",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "wpg-div",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("ul", {
+                className: "wpg-ul",
+                children: imagesToDisplay.map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
+                  className: "wpg-li",
+                  style: {
+                    '--gap': `${gap}px`
+                  },
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("figure", {
+                    className: "wpg-figure",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                      src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
+                      alt: img.alt,
+                      style: imageSize === 'custom' ? {
+                        width: customWidth ? `${customWidth}px` : 'auto',
+                        height: customHeight ? `${customHeight}px` : 'auto'
+                      } : undefined
+                    }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("figcaption", {
+                      className: "wpg-caption",
+                      style: {
+                        backgroundColor: ImgbackgroundColor,
+                        color: ImgCaptionColor,
+                        textAlign: alignx,
+                        padding: '6px 10px'
+                      },
+                      children: img.caption
+                    })]
+                  })
+                }, img.id))
+              })
+            })
+          })
+        }), (layoutType === 'grid' || layoutType === 'lightbox' || layoutType === 'masonry') && showPagination && totalPages > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "wpct_gallery__pagination",
+          style: {
+            marginTop: '1em',
+            textAlign: 'center'
+          },
+          children: Array.from({
+            length: totalPages
+          }).map((_, i) => {
+            const page = i + 1;
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+              variant: currentPage === page ? 'primary' : 'secondary',
+              onClick: () => setAttributes({
+                currentPage: page
+              }),
+              style: {
+                margin: '0 4px',
+                minWidth: '32px'
+              },
+              children: page
+            }, page);
+          })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.MediaUploadCheck, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.MediaUpload, {
             onSelect: onSelect,
@@ -159,7 +993,7 @@ function Edit({
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Save)
+/* harmony export */   "default": () => (/* binding */ save)
 /* harmony export */ });
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__);
@@ -167,32 +1001,401 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__);
 
 
-function Save({
+function save({
   attributes
 }) {
   const {
     images = [],
-    maxRows = 3
+    columns = 3,
+    gap = 16,
+    showCaptions = true,
+    imageSize = 'full',
+    customWidth = 0,
+    customHeight = 0,
+    layoutType = 'grid',
+    showPagination = false,
+    itemsPerPage = 12,
+    //Grid layout 
+    gridBackgroundColor = '#000000',
+    grindCaptionColor = '#ffffff',
+    GtBgap = 0,
+    // Lightbox specific attributes
+    LightBackgroundColor = '#000000',
+    LightCaptionColor = '#ffffff',
+    LighttBgap = 0,
+    // Image Browser attributes
+    browserShowThumbnails = true,
+    browserShowNavigation = true,
+    browserShowCounter = true,
+    browserAutoFullscreen = false,
+    browserZoomEnabled = true,
+    ImgbackgroundColor = '#000000',
+    ImgCaptionColor = '#ffffff',
+    // Masonry specific attributes
+    masonryBorderRadius = 8,
+    masonryImageBorder = 0,
+    masonryImageBorderColor = '#e0e0e0',
+    masonryImageBorderStyle = 'solid'
   } = attributes;
-  const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save();
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-    ...blockProps,
-    className: "my-gallery",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      className: "my-gallery__grid",
-      style: {
-        '--columns': maxRows
-      },
-      children: images.map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("figure", {
-        className: "my-gallery__item",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
-          src: img.url,
-          alt: img.alt
-        }), img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("figcaption", {
-          children: img.caption
+
+  // If no images, render empty div to maintain consistency
+  if (images.length === 0) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save({
+        className: 'my-gallery'
+      }),
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "my-gallery__empty"
+      })
+    });
+  }
+  const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save({
+    className: 'my-gallery'
+  });
+  if (layoutType === 'grid') {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      ...blockProps,
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "my-gallery__grid",
+        style: {
+          '--columns': columns,
+          '--gap': `${gap}px`,
+          display: 'grid',
+          gridTemplateColumns: `repeat(${columns}, 1fr)`,
+          gap: `${gap}px`
+        },
+        "data-bg-color": gridBackgroundColor,
+        "data-caption-color": grindCaptionColor,
+        "data-columns": columns,
+        "data-gap": gap,
+        "data-show-pagination": showPagination ? 'true' : 'false',
+        "data-items-per-page": itemsPerPage,
+        children: images.map((img, index) => {
+          const imageUrl = imageSize === 'custom' ? img.url : img.sizes && img.sizes[imageSize] && img.sizes[imageSize].url || img.url;
+          const imageStyles = imageSize === 'custom' && (customWidth || customHeight) ? {
+            width: customWidth ? `${customWidth}px` : 'auto',
+            height: customHeight ? `${customHeight}px` : 'auto'
+          } : {};
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("figure", {
+            className: "wpc-gallery__item",
+            "data-image-id": img.id || index,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+              src: imageUrl,
+              alt: img.alt || '',
+              style: Object.keys(imageStyles).length > 0 ? imageStyles : undefined
+            }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("figcaption", {
+              style: {
+                backgroundColor: gridBackgroundColor,
+                color: grindCaptionColor,
+                paddingTop: GtBgap,
+                paddingBottom: GtBgap
+              },
+              children: [" ", img.caption, " "]
+            })]
+          }, img.id || index);
+        })
+      }), showPagination && images.length > itemsPerPage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "my-gallery__pagination",
+        "data-total-items": images.length,
+        "data-items-per-page": itemsPerPage
+      })]
+    });
+  } else if (layoutType === 'lightbox') {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      ...blockProps,
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "my-gallery__lightbox-grid",
+        style: {
+          '--columns': columns,
+          '--gap': `${gap}px`,
+          display: 'grid',
+          gridTemplateColumns: `repeat(${columns}, 1fr)`,
+          gap: `${gap}px`
+        },
+        "data-layout": "lightbox",
+        "data-columns": columns,
+        "data-gap": gap,
+        "data-show-captions": showCaptions ? 'true' : 'false',
+        "data-show-pagination": showPagination ? 'true' : 'false',
+        "data-items-per-page": itemsPerPage,
+        "data-total-items": images.length,
+        children: images.map((img, index) => {
+          const imageUrl = imageSize === 'custom' ? img.url : img.sizes && img.sizes[imageSize] && img.sizes[imageSize].url || img.url;
+          const fullImageUrl = img.sizes && img.sizes['full'] && img.sizes['full'].url ? img.sizes['full'].url : img.url;
+          const imageStyles = imageSize === 'custom' && (customWidth || customHeight) ? {
+            width: customWidth ? `${customWidth}px` : 'auto',
+            height: customHeight ? `${customHeight}px` : 'auto'
+          } : {};
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("figure", {
+            className: "my-gallery__lightbox-item",
+            "data-image-id": img.id || index,
+            "data-image-index": index,
+            "data-full-image": fullImageUrl,
+            "data-caption": img.caption || '',
+            "data-alt": img.alt || '',
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+              className: "my-gallery__lightbox-thumb",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+                src: imageUrl,
+                alt: img.alt || '',
+                style: Object.keys(imageStyles).length > 0 ? imageStyles : undefined
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+                className: "my-gallery__lightbox-overlay",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+                  className: "my-gallery__lightbox-icon",
+                  children: "\uD83D\uDD0D"
+                })
+              })]
+            }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("figcaption", {
+              style: {
+                backgroundColor: LightBackgroundColor,
+                color: LightCaptionColor,
+                paddingTop: LighttBgap,
+                paddingBottom: LighttBgap
+              },
+              children: [" ", img.caption, " "]
+            })]
+          }, img.id || index);
+        })
+      }), showPagination && images.length > itemsPerPage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "my-gallery__pagination",
+        "data-total-items": images.length,
+        "data-items-per-page": itemsPerPage
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "my-gallery__lightbox-modal",
+        style: {
+          display: 'none'
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "my-gallery__lightbox-backdrop"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "my-gallery__lightbox-container",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+            className: "my-gallery__lightbox-close",
+            "aria-label": "Close lightbox",
+            children: "\xD7"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+            className: "my-gallery__lightbox-prev",
+            "aria-label": "Previous image",
+            children: "\u276E"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+            className: "my-gallery__lightbox-next",
+            "aria-label": "Next image",
+            children: "\u276F"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+            className: "my-gallery__lightbox-content",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+              className: "my-gallery__lightbox-image",
+              src: "",
+              alt: ""
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+              className: "my-gallery__lightbox-caption"
+            })]
+          })]
         })]
-      }, img.id))
-    })
+      })]
+    });
+  } else if (layoutType === 'imagebrowser') {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      ...blockProps,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "my-gallery__imagebrowser",
+        "data-layout": "imagebrowser",
+        "data-bg-color": ImgbackgroundColor,
+        "data-caption-color": ImgCaptionColor,
+        "data-show-thumbnails": browserShowThumbnails ? 'true' : 'false',
+        "data-show-navigation": browserShowNavigation ? 'true' : 'false',
+        "data-show-counter": browserShowCounter ? 'true' : 'false',
+        "data-auto-fullscreen": browserAutoFullscreen ? 'true' : 'false',
+        "data-zoom-enabled": browserZoomEnabled ? 'true' : 'false',
+        "data-show-captions": showCaptions ? 'true' : 'false',
+        "data-total-images": images.length,
+        "data-transition-effect": "fade",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "my-gallery__imagebrowser-main",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "my-gallery__imagebrowser-viewer",
+            children: images.map((img, index) => {
+              const imageUrl = imageSize === 'custom' ? img.url : img.sizes && img.sizes[imageSize] && img.sizes[imageSize].url || img.url;
+              const fullImageUrl = img.sizes && img.sizes['full'] && img.sizes['full'].url ? img.sizes['full'].url : img.url;
+              const imageStyles = imageSize === 'custom' && (customWidth || customHeight) ? {
+                width: customWidth ? `${customWidth}px` : 'auto',
+                height: customHeight ? `${customHeight}px` : 'auto'
+              } : {};
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+                className: `my-gallery__browser-image ${index === 0 ? 'active' : ''}`,
+                "data-image-index": index,
+                "data-image-id": img.id || index,
+                "data-full-image": fullImageUrl,
+                "data-alt": img.alt || '',
+                "data-caption": img.caption || '',
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+                  src: imageUrl,
+                  alt: img.alt || '',
+                  style: Object.keys(imageStyles).length > 0 ? imageStyles : undefined,
+                  "data-zoom": "1",
+                  "data-pan-x": "0",
+                  "data-pan-y": "0"
+                }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+                  className: "my-gallery__imagebrowser-caption",
+                  style: {
+                    color: ImgCaptionColor,
+                    backgroundColor: ImgbackgroundColor
+                  },
+                  dangerouslySetInnerHTML: {
+                    __html: img.caption
+                  }
+                })]
+              }, img.id || index);
+            })
+          }), browserShowNavigation && images.length > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+              className: "my-gallery__imagebrowser-prev",
+              "aria-label": "Previous image",
+              type: "button",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+                children: "\u2039"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+              className: "my-gallery__imagebrowser-next",
+              "aria-label": "Next image",
+              type: "button",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+                children: "\u203A"
+              })
+            })]
+          }), browserShowCounter && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+            className: "my-gallery__imagebrowser-counter",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+              className: "current",
+              children: "1"
+            }), " of ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+              className: "total",
+              children: images.length
+            })]
+          }), browserZoomEnabled && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+            className: "my-gallery__imagebrowser-zoom-controls",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+              className: "my-gallery__imagebrowser-zoom-in",
+              "aria-label": "Zoom in",
+              type: "button",
+              title: "Zoom In",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+                children: "+"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+              className: "my-gallery__imagebrowser-zoom-out",
+              "aria-label": "Zoom out",
+              type: "button",
+              title: "Zoom Out",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+                children: "\u2212"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+              className: "my-gallery__imagebrowser-zoom-reset",
+              "aria-label": "Reset zoom",
+              type: "button",
+              title: "Reset Zoom",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+                children: "\u27F2"
+              })
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "my-gallery__imagebrowser-fullscreen-control",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("button", {
+              className: "my-gallery__imagebrowser-fullscreen",
+              "aria-label": "Toggle fullscreen",
+              type: "button",
+              title: "Fullscreen",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+                className: "fullscreen-enter",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("i", {
+                  className: "fas fa-expand"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+                className: "fullscreen-exit",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("i", {
+                  className: "fas fa-times"
+                })
+              })]
+            })
+          })]
+        }), browserShowThumbnails && images.length > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "my-gallery__imagebrowser-thumbnails",
+          children: images.map((img, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: `my-gallery__imagebrowser-thumb ${index === 0 ? 'active' : ''}`,
+            "data-image-index": index,
+            "data-image-id": img.id || index,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+              src: img.sizes?.thumbnail?.url || img.url,
+              alt: img.alt || ''
+            })
+          }, img.id || index))
+        })]
+      })
+    });
+  } else if (layoutType === 'masonry') {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      ...blockProps,
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "my-gallery__masonry",
+        style: {
+          '--columns': columns,
+          '--gap': `${gap}px`,
+          '--masonry-border-radius': `${masonryBorderRadius}px`,
+          '--masonry-border-width': `${masonryImageBorder}px`,
+          '--masonry-border-color': masonryImageBorderColor,
+          '--masonry-border-style': masonryImageBorderStyle,
+          display: 'grid',
+          gridTemplateColumns: `repeat(${columns}, 1fr)`,
+          gap: `${gap}px`
+        },
+        "data-layout": "masonry",
+        "data-columns": columns,
+        "data-gap": gap,
+        "data-show-captions": showCaptions ? 'true' : 'false',
+        "data-show-pagination": showPagination ? 'true' : 'false',
+        "data-items-per-page": itemsPerPage,
+        "data-total-items": images.length,
+        "data-border-radius": masonryBorderRadius,
+        "data-border-width": masonryImageBorder,
+        "data-border-color": masonryImageBorderColor,
+        "data-border-style": masonryImageBorderStyle,
+        children: images.map((img, index) => {
+          const imageUrl = imageSize === 'custom' ? img.url : img.sizes && img.sizes[imageSize] && img.sizes[imageSize].url || img.url;
+          const imageStyles = imageSize === 'custom' && (customWidth || customHeight) ? {
+            width: customWidth ? `${customWidth}px` : 'auto',
+            height: customHeight ? `${customHeight}px` : 'auto'
+          } : {};
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("figure", {
+            className: "my-gallery__masonry-item",
+            "data-image-id": img.id || index,
+            "data-image-index": index,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+              src: imageUrl,
+              alt: img.alt || '',
+              style: Object.keys(imageStyles).length > 0 ? imageStyles : undefined,
+              "data-original-height": img.height || 'auto',
+              "data-original-width": img.width || 'auto'
+            }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("figcaption", {
+              className: "my-gallery__masonry-caption",
+              dangerouslySetInnerHTML: {
+                __html: img.caption
+              }
+            })]
+          }, img.id || index);
+        })
+      }), showPagination && images.length > itemsPerPage && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "my-gallery__pagination",
+        "data-total-items": images.length,
+        "data-items-per-page": itemsPerPage
+      })]
+    });
+  }
+
+  // Default fallback (should not reach here)
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    ...blockProps
   });
 }
 
@@ -340,7 +1543,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('myplugin/photo-gallery', {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('photogallery/photo-gallery', {
   edit: _edit__WEBPACK_IMPORTED_MODULE_1__["default"],
   save: _save__WEBPACK_IMPORTED_MODULE_2__["default"]
 });

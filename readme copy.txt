@@ -19,49 +19,21 @@ No more clunky shortcodes or third-party interfaces—just fast, simple, and vis
 
 Whether you’re building a portfolio, travel blog, or product showcase, WP PhotoBlocks gives you a simple, reliable, and elegant way to make your photos shine.
 
-== Gallery Layouts Overview ==
 
-The plugin offers multiple gallery layouts — Grid, Lightbox, Masonry, and Image Browser View — each designed to provide flexibility and visual appeal.
-While most configuration options are shared across layouts, a few style and interaction features are unique to each type.
-
-
-### Grid Layout
-
-* Configure the number of images displayed per row (1–6).
-* Set dynamic spacing between images (e.g., 6, 8, 10).
-* Toggle image captions to show or hide as needed.
-* Choose from predefined image sizes — Full, Large, Medium — or select Custom to define dynamic width and height values.
-* Enable pagination and specify how many images to display per page.
-* In the InspectorControls style section, customize the background color, text color, and padding (top and bottom) to match your desired design.
+### 🔓 Free Features:
+* Create photo galleries using the native block editor
+* Responsive image grid layout with customizable columns and gap spacing
+* Optional image captions
+* Lightweight and optimized for performance
+* Clean front-end output with minimal CSS
+* Future support for layout types like Carousel or Masonry (planned)
 
 
-### Lightbox Layout
+### 🔐 Pro Features:
 
-* Configure the number of images displayed per row (1–6).
-* Adjust spacing dynamically between images.
-* Toggle image captions visibility.
-* Choose from preset or custom image sizes with dynamic width and height.
-* Define how many images to display per page using pagination settings.
-* Includes a lightbox viewer for interactive image previews.
-
-### Masonry Layout
-
-* Configure the number of images displayed per row (1–6).
-* Set dynamic spacing between images.
-* Toggle captions visibility and choose from preset or custom image sizes.
-* Control pagination to define images per page.
-* In the InspectorControls style section, dynamically adjust image border radius and border width.
-* Choose from four border styles — Solid, Dashed, Dotted, and Double — and customize the border color according to your preference.
-
-### Image Browser View
-
-* Display images in full-screen mode for an immersive experience.
-* Use thumbnail previews for quick browsing and selection.
-* Enable slideshow mode with customizable transitions and timing.
-* Zoom in for detailed image viewing and navigate within zoomed images.
-* Show image position indicators (e.g., “2 of 14”).
-* Responsive design optimized for various screen sizes and devices.
-* In the InspectorControls style section, easily adjust background color, text color, and vertical padding for a polished design.
+- Carousel and Lightbox layouts
+- Infinite scrolling
+- Toggleable navigation arrows for Carousel and Lightbox
 
 
 == Installation ==

@@ -3,11 +3,13 @@
 return array(
 	'photo-gallery' => array(
 		'apiVersion' => 2,
-		'name' => 'myplugin/photo-gallery',
-		'title' => 'Photo Gallery',
+		'name' => 'photogallery/photo-gallery',
+		'title' => 'PhotoBlocks Gallery',
+		'version' => '1.0.0',
+		'textdomain' => 'photoblocks-gallery',
 		'category' => 'media',
 		'icon' => 'format-gallery',
-		'description' => 'A clean, responsive image grid gallery block.',
+		'description' => 'A powerful Gutenberg block for creating responsive',
 		'attributes' => array(
 			'images' => array(
 				'type' => 'array',
@@ -15,7 +17,7 @@ return array(
 					
 				)
 			),
-			'maxRows' => array(
+			'columns' => array(
 				'type' => 'number',
 				'default' => 3
 			),
@@ -27,16 +29,50 @@ return array(
 				'type' => 'boolean',
 				'default' => true
 			),
-			'layout' => array(
+			'imageSize' => array(
+				'type' => 'string',
+				'default' => 'full'
+			),
+			'customWidth' => array(
+				'type' => 'number',
+				'default' => 0
+			),
+			'customHeight' => array(
+				'type' => 'number',
+				'default' => 0
+			),
+			'layoutType' => array(
 				'type' => 'string',
 				'default' => 'grid'
+			),
+			'showPagination' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'itemsPerPage' => array(
+				'type' => 'number',
+				'default' => 12
+			),
+			'currentPage' => array(
+				'type' => 'number',
+				'default' => 1
+			),
+			'align' => array(
+				'type' => 'string',
+				'default' => 'center'
 			)
 		),
 		'supports' => array(
-			'html' => true
+			'html' => false,
+			'align' => array(
+				'left',
+				'right',
+				'full',
+				'wide'
+			)
 		),
 		'editorScript' => 'file:./index.js',
-		'style' => 'photo-gallery-style',
-		'editorStyle' => 'photo-gallery-editor'
+		'editorStyle' => 'photo-gallery-editor',
+		'style' => 'photo-gallery-style-frontend'
 	)
 );

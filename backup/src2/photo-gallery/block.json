@@ -1,12 +1,10 @@
 {
   "apiVersion": 2,
-  "name": "photogallery/photo-gallery",
-  "title": "PhotoBlocks Gallery",
-  "version": "1.0.0",
-  "textdomain": "photoblocks-gallery",
+  "name": "rk-wpcraft/photo-gallery",
+  "title": "Rk Photo Gallery",
   "category": "media",
   "icon": "format-gallery",
-  "description": "A powerful Gutenberg block for creating responsive",
+  "description": "A clean, responsive image grid gallery block.",
   "attributes": {
     "images": { "type": "array", "default": []},
     "columns": { "type": "number", "default": 3},
@@ -18,16 +16,14 @@
     "layoutType": { "type": "string", "default": "grid"},
     "showPagination": {"type": "boolean","default": false},
     "itemsPerPage": {"type": "number","default": 12},
-    "currentPage": { "type": "number", "default": 1},
-    "align": {"type": "string", "default": "center"}
+    "currentPage": { "type": "number", "default": 1}
   },
+
   "supports": {
-    "html": false,
-    "align": [ "left", "right", "full", "wide" ]
+    "html": false
   },
-  
   "editorScript": "file:./index.js",
   "editorStyle": "photo-gallery-editor",
   "style": "photo-gallery-style-frontend"
-  
+
 }
