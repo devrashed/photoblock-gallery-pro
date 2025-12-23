@@ -794,11 +794,16 @@
   .wpg-pause-btn:hover {
     background: rgba(0, 0, 0, 0.9);
   }
-
+  .wpg-figure img{
+    width: 100%;
+    height: auto;
+    display: block;
+  }
   .wpg-article {
     display: flex;
     width: 200%;
-    animation: wpg-bannermove 20s linear infinite;
+    /* animation: wpg-bannermove 20s linear infinite; */
+    animation: wpg-bannermove var(--animation-speed) linear infinite;
   }
 
   .wpg-article.wpg-paused {
@@ -818,7 +823,9 @@
 
   .wpg-li {
     width: 100%;
-  }
+    padding-left: var(--padding);
+    padding-right: var(--padding);
+  }   
 
   @keyframes wpg-bannermove {
     0% {
@@ -840,3 +847,90 @@
   .wp-block-wpg-banner-slider .wpg-article {
     animation: none;
   }
+
+
+  /*==== Swiper Gallery =====*/
+.swiper {
+  width: 100%;
+  margin: 40px 0;
+  padding: 45px 0;
+  overflow: hidden;
+}
+
+/* Default slide */
+.swiper-slide {
+  opacity: 0.4;
+  transform: scale(0.85);
+  transition: .7s ease;
+  text-align: center;
+}
+
+.swiper-slide img {
+  width: 100%;
+  display: block;
+  border-radius: 6px;
+}
+
+/* Caption style */
+.caption {
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  opacity: 0.5;
+  transition: .4s ease;
+  margin-bottom: 15px;
+}
+
+/* Center active slide — BIG */
+.swiper-slide-active {
+  opacity: 1;
+  transform: scale(1.55);
+  z-index: 3;
+}
+
+.swiper-slide-active .caption {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  opacity: 0.9;
+  transform: scale(1.25);
+  z-index: 2;
+}
+
+.swiper-slide-prev .caption,
+.swiper-slide-next .caption {
+  opacity: 0.8;
+}
+
+/* Wrapper fix */
+.swiper-wrapper {
+  display: flex;
+  align-items: center;
+  transition-property: transform;
+  box-sizing: content-box;
+}
+.swiper-button-next, .swiper-button-prev{
+  top:100% !important; 
+}
+
+
+/* ==== Custom Masonary ==== */
+
+.masonary_img_gallery{
+  -moz-column-width: 300px;
+       column-width: 300px;
+  -moz-column-gap: 5px;
+       column-gap: 5px;
+  padding: 5px;
+}
+
+.masonary_img_gallery img{
+  width: 100%; 
+  margin-bottom: 5px; 
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}

@@ -121,16 +121,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 				true
 			);
 		}
-
-		/* if (!is_admin()) {
+		// swiper Frontend JavaScript (only on frontend)
+		if (!is_admin()) {
+		wp_enqueue_style(
+        'swiper-gallery-style-frontend',
+        'https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.8.4/swiper-bundle.min.css',
+        array(),
+        null
+		);
+	}
+		// Swiper JS (must load BEFORE your swiper file)
+		if (!is_admin()) {
+		wp_enqueue_script(
+			'swiper-bundle-js',
+			'https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.8.4/swiper-bundle.min.js',
+			array(),
+			null,
+			true
+		);
+	}
+		// Your swiper layout script (depends on Swiper)
+		if (!is_admin()) {
 			wp_enqueue_script(
-				'infinite-gallery-layout',
-				plugins_url('src/photo-gallery/infinite_carousel.js', __FILE__),
-				array(),
-				filemtime(plugin_dir_path(__FILE__) . 'src/photo-gallery/infinite_carousel.js'),
+				'swiper-gallery-layout',
+				plugins_url('src/photo-gallery/swiper-frontend.js', __FILE__),
+				array('swiper-bundle-js'), // <-- IMPORTANT
+				filemtime(plugin_dir_path(__FILE__) . 'src/photo-gallery/swiper-frontend.js'),
 				true
 			);
-		} */
+		}	
+
 
 		
 	}

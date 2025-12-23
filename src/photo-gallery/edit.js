@@ -56,6 +56,12 @@ export default function Edit({ attributes, setAttributes }) {
 
     // Infinite Carousel attributes
     alignx='center',
+    imagepadding= 2,
+    animationSpeed= 25,
+
+    // swiper Carousel attributes
+    swiperautoplay= true,
+    autoplayDelay= 500,
 
   } = attributes;
 
@@ -141,9 +147,16 @@ export default function Edit({ attributes, setAttributes }) {
             {__('Infinite Carousel', 'photoblocks-gallery')}
           
           </ToolbarButton>
+        
+           <ToolbarButton
+            icon="cover-image"
+            isPressed={layoutType === 'swiper'}
+            onClick={() => setAttributes({ layoutType: 'swiper' })}
+           >
+            {__('Swipper Gallery', 'photoblocks-gallery')}
+          </ToolbarButton>
 
-
-          <ToolbarButton
+          {/* <ToolbarButton
             icon="cover-image"
             disabled={true}
           >
@@ -157,7 +170,7 @@ export default function Edit({ attributes, setAttributes }) {
           >
             {__('Image Center', 'photoblocks-gallery')}
             <span className="pro-badge">PRO</span>
-          </ToolbarButton>
+          </ToolbarButton> */}
 
         </ToolbarGroup>
       </BlockControls>
@@ -176,13 +189,15 @@ export default function Edit({ attributes, setAttributes }) {
                 { label: 'Image browser Layout', value: 'imagebrowser' },
                 { label: 'Masonry Layout', value: 'masonry' },
                 { label: 'Infinite Carousel', value : 'infinite'},
+                { label: 'Swipper Gallery', value: 'swiper' },
+                { label: 'custom masonry', value: 'custom_masonry' },
                 { label: 'Wave Gallery (PRO 🔒)', value: 'wave', disabled: true },
                 { label: 'Image Center (PRO 🔒)', value: 'center', disabled: true },
               ]}
               onChange={(value) => setAttributes({ layoutType: value })}
             />
 
-            {layoutType !== 'infinite' && layoutType !== 'imagebrowser' && (
+            {layoutType !== 'infinite' && layoutType !== 'imagebrowser' && layoutType !== 'swiper' && (
               <RangeControl
                 label={__('Images Per Row')}
                 value={columns}
@@ -192,7 +207,7 @@ export default function Edit({ attributes, setAttributes }) {
               />
             )}
 
-            {layoutType !== 'imagebrowser' && (
+            {layoutType !== 'imagebrowser' && layoutType !== 'infinite' && layoutType !== 'swiper' && (
               <RangeControl
                 label={__('Space Between Images')}
                 value={gap}
@@ -202,11 +217,60 @@ export default function Edit({ attributes, setAttributes }) {
               />
             )}
 
+            {layoutType == 'infinite' && (
+              <RangeControl
+                label={__('Padding Between Images')}
+                value={imagepadding}
+                onChange={(value) => setAttributes({ imagepadding: value })}
+                min={2}
+                max={20}
+              />
+            )
+          }
+
+          {layoutType == 'infinite' && (
+             <RangeControl
+                label={__('Animation Speed')}
+                value={animationSpeed}
+                onChange={(value) => setAttributes({ animationSpeed: value })}
+                min={1}
+                max={20}
+              />
+              )
+          }
+
             <ToggleControl
               label={__('Show Captions')}
               checked={showCaptions}
               onChange={(value) => setAttributes({ showCaptions: value })}
             />
+
+          {layoutType == 'swiper' && (
+              <ToggleControl
+                  label={ __('Autoplay') }
+                  checked={ swiperautoplay }
+                  onChange={(value) => setAttributes({ swiperautoplay: value }) }
+              />
+            ) 
+          }  
+          {layoutType == 'swiper' && (
+
+                      <SelectControl
+                label={ __('Autoplay Delay (ms)') }
+                value={ autoplayDelay }
+                options={[
+                    { label: '500 ms', value: 500 },
+                    { label: '1,000 ms', value: 1000 },
+                    { label: '1,500 ms', value: 1500 },
+                    { label: '2,000 ms', value: 2000 },
+                    { label: '2,500 ms', value: 2500 },
+                    { label: '3,000 ms', value: 3000 },
+                    { label: '30000 ms', value: 30000 },
+                ]}
+                onChange={(value) => setAttributes({ autoplayDelay: Number(value) })}
+            />
+            ) 
+          } 
 
             <SelectControl
               label={__('Image Size')}
@@ -473,7 +537,7 @@ export default function Edit({ attributes, setAttributes }) {
               </>
             )}
 
-            {layoutType === 'infinite' && (
+            {(layoutType === 'infinite' || layoutType === 'swiper') && (
               <>
                 <div style={{ marginBottom: '16px' }}>
                   <label style={{ display: 'block', marginBottom: '4px', fontSize: '11px', fontWeight: '500', textTransform: 'uppercase' }}>
@@ -751,12 +815,14 @@ export default function Edit({ attributes, setAttributes }) {
             )}
 
             {layoutType === 'infinite' && (
-              <div className="wpg-section">
-                <article className="wpg-article">
+
+              
+              <div className="wpg-section">                
+                <article className="wpg-article" style={{ '--animation-speed': `${animationSpeed}s` }}>
                   <div className="wpg-div">
                     <ul className="wpg-ul">
-                        {imagesToDisplay.map((img) => (
-                          <li className="wpg-li" key={img.id} style={{ '--gap': `${gap}px` }}>
+                        {images.map((img) => (
+                          <li className="wpg-li" key={img.id} style={{ '--padding': `${imagepadding ?? 0}px` }}>
                             <figure className="wpg-figure">
                               <img src={imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url} alt={img.alt}
                                   style={imageSize === 'custom' ? {
@@ -783,8 +849,68 @@ export default function Edit({ attributes, setAttributes }) {
                 </article>
               </div>
             )}
+            
+            {layoutType === 'swiper' && (
 
-            {/* Pagination Button */}
+                <div className="swiper spg-swiper">
+                    <div className="swiper-wrapper">
+                        {images.map((img, i) => (
+                            <div className="swiper-slide" key={i}>
+                                <img src={imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url} alt={img.alt}
+                                    style={imageSize === 'custom' ? {
+                                      width: customWidth ? `${customWidth}px` : 'auto',
+                                      height: customHeight ? `${customHeight}px` : 'auto',
+                                    } : undefined
+                                    }
+                                />
+                              {showCaptions && img.caption && (
+                                  <figcaption className="caption" 
+                                  style={{
+                                      backgroundColor: ImgbackgroundColor,
+                                      color: ImgCaptionColor,
+                                      textAlign: alignx,
+                                      padding: '6px 10px',
+                                    }} 
+                                  >{img.caption}</figcaption>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="swiper-button-next"></div>
+                    <div className="swiper-button-prev"></div>
+                  </div> 
+
+            )}
+
+             {layoutType === 'custom_masonry' && (
+
+                  <div className='masonary_img_gallery'>
+                    {images.map((img, i) => (
+                          <img
+                              key={i}
+                              src={
+                                  imageSize === "custom"
+                                      ? img?.url
+                                      : img?.sizes?.[imageSize]?.url || img?.url
+                              }
+                              alt={img?.alt || ""}
+                              style={
+                                  imageSize === "custom"
+                                      ? {
+                                            width: customWidth ? `${customWidth}px` : "auto",
+                                            height: customHeight ? `${customHeight}px` : "auto",
+                                        }
+                                      : undefined
+                              }
+                          />
+                      ))}
+                  </div>
+            )}
+
+
+            {/* ======  Pagination Button ====== */}
+
             {(layoutType === 'grid' || layoutType === 'lightbox' || layoutType === 'masonry') && showPagination && totalPages > 1 && (
               <div className="wpct_gallery__pagination" style={{ marginTop: '1em', textAlign: 'center' }} >
                 {Array.from({ length: totalPages }).map((_, i) => {

@@ -60,6 +60,22 @@ return array(
 			'align' => array(
 				'type' => 'string',
 				'default' => 'center'
+			),
+			'imagepadding' => array(
+				'type' => 'number',
+				'default' => 2
+			),
+			'animationSpeed' => array(
+				'type' => 'string',
+				'default' => 25
+			),
+			'swiperautoplay' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'autoplayDelay' => array(
+				'type' => 'number',
+				'default' => 1500
 			)
 		),
 		'supports' => array(

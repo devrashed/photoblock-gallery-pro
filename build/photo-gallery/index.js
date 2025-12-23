@@ -73,7 +73,12 @@ function Edit({
     masonryHoverEffect = 'lift',
     masonryImageOpacity = 1,
     // Infinite Carousel attributes
-    alignx = 'center'
+    alignx = 'center',
+    imagepadding = 2,
+    animationSpeed = 25,
+    // swiper Carousel attributes
+    swiperautoplay = true,
+    autoplayDelay = 500
   } = attributes;
   const onSelect = newImages => {
     setAttributes({
@@ -154,20 +159,13 @@ function Edit({
             layoutType: 'infinite'
           }),
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Infinite Carousel', 'photoblocks-gallery')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
           icon: "cover-image",
-          disabled: true,
-          children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Wave Gallery', 'photoblocks-gallery'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-            className: "pro-badge",
-            children: "PRO"
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
-          icon: "cover-image",
-          disabled: true,
-          children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Center', 'photoblocks-gallery'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-            className: "pro-badge",
-            children: "PRO"
-          })]
+          isPressed: layoutType === 'swiper',
+          onClick: () => setAttributes({
+            layoutType: 'swiper'
+          }),
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Swipper Gallery', 'photoblocks-gallery')
         })]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
@@ -195,6 +193,12 @@ function Edit({
               label: 'Infinite Carousel',
               value: 'infinite'
             }, {
+              label: 'Swipper Gallery',
+              value: 'swiper'
+            }, {
+              label: 'custom masonry',
+              value: 'custom_masonry'
+            }, {
               label: 'Wave Gallery (PRO 🔒)',
               value: 'wave',
               disabled: true
@@ -206,7 +210,7 @@ function Edit({
             onChange: value => setAttributes({
               layoutType: value
             })
-          }), layoutType !== 'infinite' && layoutType !== 'imagebrowser' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+          }), layoutType !== 'infinite' && layoutType !== 'imagebrowser' && layoutType !== 'swiper' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Images Per Row'),
             value: columns,
             onChange: value => setAttributes({
@@ -214,7 +218,7 @@ function Edit({
             }),
             min: 1,
             max: 6
-          }), layoutType !== 'imagebrowser' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+          }), layoutType !== 'imagebrowser' && layoutType !== 'infinite' && layoutType !== 'swiper' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Space Between Images'),
             value: gap,
             onChange: value => setAttributes({
@@ -222,11 +226,61 @@ function Edit({
             }),
             min: 8,
             max: 100
+          }), layoutType == 'infinite' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Padding Between Images'),
+            value: imagepadding,
+            onChange: value => setAttributes({
+              imagepadding: value
+            }),
+            min: 2,
+            max: 20
+          }), layoutType == 'infinite' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Animation Speed'),
+            value: animationSpeed,
+            onChange: value => setAttributes({
+              animationSpeed: value
+            }),
+            min: 1,
+            max: 20
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Show Captions'),
             checked: showCaptions,
             onChange: value => setAttributes({
               showCaptions: value
+            })
+          }), layoutType == 'swiper' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Autoplay'),
+            checked: swiperautoplay,
+            onChange: value => setAttributes({
+              swiperautoplay: value
+            })
+          }), layoutType == 'swiper' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Autoplay Delay (ms)'),
+            value: autoplayDelay,
+            options: [{
+              label: '500 ms',
+              value: 500
+            }, {
+              label: '1,000 ms',
+              value: 1000
+            }, {
+              label: '1,500 ms',
+              value: 1500
+            }, {
+              label: '2,000 ms',
+              value: 2000
+            }, {
+              label: '2,500 ms',
+              value: 2500
+            }, {
+              label: '3,000 ms',
+              value: 3000
+            }, {
+              label: '30000 ms',
+              value: 30000
+            }],
+            onChange: value => setAttributes({
+              autoplayDelay: Number(value)
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Size'),
@@ -622,7 +676,7 @@ function Edit({
                 }
               })]
             })]
-          }), layoutType === 'infinite' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+          }), (layoutType === 'infinite' || layoutType === 'swiper') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
               style: {
                 marginBottom: '16px'
@@ -904,14 +958,17 @@ function Edit({
           className: "wpg-section",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("article", {
             className: "wpg-article",
+            style: {
+              '--animation-speed': `${animationSpeed}s`
+            },
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
               className: "wpg-div",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("ul", {
                 className: "wpg-ul",
-                children: imagesToDisplay.map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
+                children: images.map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("li", {
                   className: "wpg-li",
                   style: {
-                    '--gap': `${gap}px`
+                    '--padding': `${imagepadding !== null && imagepadding !== void 0 ? imagepadding : 0}px`
                   },
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("figure", {
                     className: "wpg-figure",
@@ -937,6 +994,45 @@ function Edit({
               })
             })
           })
+        }), layoutType === 'swiper' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "swiper spg-swiper",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "swiper-wrapper",
+            children: images.map((img, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "swiper-slide",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
+                alt: img.alt,
+                style: imageSize === 'custom' ? {
+                  width: customWidth ? `${customWidth}px` : 'auto',
+                  height: customHeight ? `${customHeight}px` : 'auto'
+                } : undefined
+              }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("figcaption", {
+                className: "caption",
+                style: {
+                  backgroundColor: ImgbackgroundColor,
+                  color: ImgCaptionColor,
+                  textAlign: alignx,
+                  padding: '6px 10px'
+                },
+                children: img.caption
+              })]
+            }, i))
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "swiper-button-next"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "swiper-button-prev"
+          })]
+        }), layoutType === 'custom_masonry' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "masonary_img_gallery",
+          children: images.map((img, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+            src: imageSize === "custom" ? img?.url : img?.sizes?.[imageSize]?.url || img?.url,
+            alt: img?.alt || "",
+            style: imageSize === "custom" ? {
+              width: customWidth ? `${customWidth}px` : "auto",
+              height: customHeight ? `${customHeight}px` : "auto"
+            } : undefined
+          }, i))
         }), (layoutType === 'grid' || layoutType === 'lightbox' || layoutType === 'masonry') && showPagination && totalPages > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
           className: "wpct_gallery__pagination",
           style: {
@@ -1035,7 +1131,14 @@ function save({
     masonryBorderRadius = 8,
     masonryImageBorder = 0,
     masonryImageBorderColor = '#e0e0e0',
-    masonryImageBorderStyle = 'solid'
+    masonryImageBorderStyle = 'solid',
+    // Infinite Carousel attributes
+    alignx = 'center',
+    imagepadding = 2,
+    animationSpeed = 25,
+    // swiper Carousel attributes
+    swiperautoplay = true,
+    autoplayDelay = 500
   } = attributes;
 
   // If no images, render empty div to maintain consistency
@@ -1390,6 +1493,102 @@ function save({
         "data-total-items": images.length,
         "data-items-per-page": itemsPerPage
       })]
+    });
+  } else if (layoutType === 'infinite') {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      ...blockProps,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "wpg-section",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("article", {
+          className: "wpg-article",
+          style: {
+            '--animation-speed': `${animationSpeed}s`
+          },
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "wpg-div",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("ul", {
+              className: "wpg-ul",
+              children: images.map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("li", {
+                className: "wpg-li",
+                style: {
+                  '--padding': `${imagepadding !== null && imagepadding !== void 0 ? imagepadding : 0}px`
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("figure", {
+                  className: "wpg-figure",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+                    src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
+                    alt: img.alt,
+                    style: imageSize === 'custom' ? {
+                      width: customWidth ? `${customWidth}px` : 'auto',
+                      height: customHeight ? `${customHeight}px` : 'auto'
+                    } : undefined
+                  }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("figcaption", {
+                    className: "wpg-caption",
+                    style: {
+                      backgroundColor: ImgbackgroundColor,
+                      color: ImgCaptionColor,
+                      textAlign: alignx,
+                      padding: '6px 10px'
+                    },
+                    children: img.caption
+                  })]
+                })
+              }, img.id))
+            })
+          })
+        })
+      })
+    });
+  } else if (layoutType === 'swiper') {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      ...blockProps,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "swiper spg-swiper",
+        "data-autoplay": swiperautoplay,
+        "data-swiperdelay": autoplayDelay,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "swiper-wrapper",
+          children: images.map((img, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+            className: "swiper-slide",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+              src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
+              alt: img.alt,
+              style: imageSize === 'custom' ? {
+                width: customWidth ? `${customWidth}px` : 'auto',
+                height: customHeight ? `${customHeight}px` : 'auto'
+              } : undefined
+            }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("figcaption", {
+              className: "caption",
+              style: {
+                backgroundColor: ImgbackgroundColor,
+                color: ImgCaptionColor,
+                textAlign: alignx,
+                padding: '6px 10px'
+              },
+              children: img.caption
+            })]
+          }, i))
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "swiper-button-next"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "swiper-button-prev"
+        })]
+      })
+    });
+  } else if (layoutType === 'custom_masonry') {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      ...blockProps,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "masonary_img_gallery",
+        children: images.map((img, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+          src: imageSize === "custom" ? img?.url : img?.sizes?.[imageSize]?.url || img?.url,
+          alt: img?.alt || "",
+          style: imageSize === "custom" ? {
+            width: customWidth ? `${customWidth}px` : "auto",
+            height: customHeight ? `${customHeight}px` : "auto"
+          } : undefined
+        }, i))
+      })
     });
   }
 

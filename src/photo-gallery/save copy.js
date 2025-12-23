@@ -530,7 +530,7 @@ export default function save({ attributes }) {
   } else if (layoutType === 'custom_masonry') {
     return (
         <div {...blockProps}>
-            <div className='masonary_img_gallery'>
+            <section>
                 {images.map((img, i) => (
                     <img
                         key={i}
@@ -550,7 +550,7 @@ export default function save({ attributes }) {
                         }
                     />
                 ))}
-            </div>
+            </section>
         </div>
     );
 }
