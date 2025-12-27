@@ -553,6 +553,52 @@ export default function save({ attributes }) {
             </div>
         </div>
     );
+    
+}else if (layoutType === 'fancybox') {
+    return (
+        <div {...blockProps}>
+            <div className="wpc_container">
+                {images.map((img, i) => {
+                    const imageUrl =
+                        imageSize === 'custom'
+                            ? img.url
+                            : img.sizes?.[imageSize]?.url || img.url;
+
+                    return (
+                        <div className="wpc_card" key={i}>
+                            <div className="wpc_card-image">
+                                <a
+                                    href={imageUrl}
+                                    data-fancybox="gallery"
+                                    data-caption={img.caption || img.alt || `Image ${i + 1}`}
+                                >
+                                    <img
+                                        src={imageUrl}
+                                        alt={img.alt || ''}
+                                        loading="lazy"
+                                        style={
+                                            imageSize === 'custom'
+                                                ? {
+                                                      width: customWidth
+                                                          ? `${customWidth}px`
+                                                          : undefined,
+                                                      height: customHeight
+                                                          ? `${customHeight}px`
+                                                          : undefined,
+                                                  }
+                                                : undefined
+                                        }
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+      );
+
+
 }
 
 

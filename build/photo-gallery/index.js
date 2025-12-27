@@ -199,6 +199,9 @@ function Edit({
               label: 'custom masonry',
               value: 'custom_masonry'
             }, {
+              label: 'Fancy box',
+              value: 'fancybox'
+            }, {
               label: 'Wave Gallery (PRO 🔒)',
               value: 'wave',
               disabled: true
@@ -1033,6 +1036,30 @@ function Edit({
               height: customHeight ? `${customHeight}px` : "auto"
             } : undefined
           }, i))
+        }), " ", layoutType === 'fancybox' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "wpc_container",
+          children: images.map((img, i) => {
+            const imageUrl = imageSize === "custom" ? img?.url : img?.sizes?.[imageSize]?.url || img?.url;
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "wpc_card",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "wpc_card-image",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                  href: imageUrl,
+                  "data-fancybox": "gallery",
+                  "data-caption": img?.caption || img?.alt || `Image ${i + 1}`,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                    src: imageUrl,
+                    alt: img?.alt || "",
+                    style: imageSize === "custom" ? {
+                      width: customWidth ? `${customWidth}px` : "auto",
+                      height: customHeight ? `${customHeight}px` : "auto"
+                    } : undefined
+                  })
+                })
+              })
+            }, i);
+          })
         }), (layoutType === 'grid' || layoutType === 'lightbox' || layoutType === 'masonry') && showPagination && totalPages > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
           className: "wpct_gallery__pagination",
           style: {
@@ -1588,6 +1615,36 @@ function save({
             height: customHeight ? `${customHeight}px` : "auto"
           } : undefined
         }, i))
+      })
+    });
+  } else if (layoutType === 'fancybox') {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      ...blockProps,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "wpc_container",
+        children: images.map((img, i) => {
+          const imageUrl = imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url;
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "wpc_card",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+              className: "wpc_card-image",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("a", {
+                href: imageUrl,
+                "data-fancybox": "gallery",
+                "data-caption": img.caption || img.alt || `Image ${i + 1}`,
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+                  src: imageUrl,
+                  alt: img.alt || '',
+                  loading: "lazy",
+                  style: imageSize === 'custom' ? {
+                    width: customWidth ? `${customWidth}px` : undefined,
+                    height: customHeight ? `${customHeight}px` : undefined
+                  } : undefined
+                })
+              })
+            })
+          }, i);
+        })
       })
     });
   }

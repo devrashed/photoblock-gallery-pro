@@ -191,6 +191,7 @@ export default function Edit({ attributes, setAttributes }) {
                 { label: 'Infinite Carousel', value : 'infinite'},
                 { label: 'Swipper Gallery', value: 'swiper' },
                 { label: 'custom masonry', value: 'custom_masonry' },
+                { label: 'Fancy box', value: 'fancybox' },
                 { label: 'Wave Gallery (PRO 🔒)', value: 'wave', disabled: true },
                 { label: 'Image Center (PRO 🔒)', value: 'center', disabled: true },
               ]}
@@ -906,7 +907,51 @@ export default function Edit({ attributes, setAttributes }) {
                           />
                       ))}
                   </div>
+
+            )} {layoutType === 'fancybox' && (
+
+                  <div className="wpc_container">
+                    {images.map((img, i) => {
+                        const imageUrl =
+                            imageSize === "custom"
+                                ? img?.url
+                                : img?.sizes?.[imageSize]?.url || img?.url;
+                        return (
+                            <div className="wpc_card" key={i}>
+                                <div className="wpc_card-image">
+                                    <a
+                                        href={imageUrl}
+                                        data-fancybox="gallery"
+                                        data-caption={img?.caption || img?.alt || `Image ${i + 1}`}
+                                    >
+                                        <img
+                                            src={imageUrl}
+                                            alt={img?.alt || ""}
+                                            style={
+                                                imageSize === "custom"
+                                                    ? {
+                                                          width: customWidth
+                                                              ? `${customWidth}px`
+                                                              : "auto",
+                                                          height: customHeight
+                                                              ? `${customHeight}px`
+                                                              : "auto",
+                                                      }
+                                                    : undefined
+                                            }
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+                        );
+                    })}
+                  </div>
+
             )}
+            
+
+
+            
 
 
             {/* ======  Pagination Button ====== */}
