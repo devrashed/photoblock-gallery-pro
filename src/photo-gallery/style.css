@@ -2505,37 +2505,7 @@ a comprehensive styling
 
 /* ==== Custom Masonary ==== */
 
-/* .masonary_img_gallery{
-  -moz-column-width: 300px;
-       column-width: 300px;
-  -moz-column-gap: 5px;
-       column-gap: 5px;
-  padding: 5px;
-} */
-
-/* .masonary_img_gallery {
-  column-count: var(--columns);
-  column-gap: var(--gap);
-}
-.wpct_masonry_item {
-  break-inside: avoid;
-  margin-bottom: var(--gap);
-}
-
-.masonary_img_gallery img{
-  width: 100%; 
-  margin-bottom: 5px; 
-  border-radius: 8px;
-  transition: transform 0.3s ease;
-} */
-
-
-/* .masonary_img_gallery img:hover{
-  transform: scale(1.05);
-} */
-
-
-.masonry_img_gallery {
+/* .masonry_img_gallery {
   column-count: var(--columns);
   column-gap: var(--gap);
   border: 0px;
@@ -2558,6 +2528,69 @@ a comprehensive styling
 .masonry_img_gallery img:hover{
   transform: scale(1.05);
 } 
+ */
+
+
+/* Masonry container */
+.masonry_img_gallery {
+  column-count: var(--columns);
+  column-gap: var(--gap);
+  border: 0;
+}
+
+/* Masonry item */
+.wpct_masonry_item {
+  position: relative;
+  break-inside: avoid;
+  margin-bottom: 16px; /* Default fallback */
+  overflow: hidden; /* IMPORTANT: Clips the zoomed image */
+  border-radius: var(--masonry-border-radius, 0);
+}
+
+/* Image */
+.wpct_masonry_item img {
+  width: 100%;
+  display: block;
+  border-radius: var(--masonry-border-radius, 0);
+  border-width: var(--masonry-border-width, 0);
+  border-style: var(--masonry-border-style, solid);
+  border-color: var(--masonry-border-color, transparent);
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+/* Hover zoom */
+.wpct_masonry_item:hover img {
+  transform: scale(1.05);
+}
+
+/* Caption overlay */
+.wpct_gallery__masonry-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #fff;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0)
+  );
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  border-radius: 0 0 var(--masonry-border-radius, 0) var(--masonry-border-radius, 0);
+}
+
+/* Show caption on hover */
+.wpct_masonry_item:hover .wpct_gallery__masonry-caption {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 
 /* ====== FancyBox ======= */

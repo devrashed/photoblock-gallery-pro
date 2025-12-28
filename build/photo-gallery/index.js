@@ -1630,15 +1630,14 @@ function save({
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
         className: "masonry_img_gallery",
         style: {
-          /* '--columns': `${columns}`,
-          '--gap': `${gap}px`,
-          '--masonry-border-radius': `${masonryBorderRadius}px`,
-          '--masonry-border-width': `${masonryImageBorder}px`,
-          '--masonry-border-color': masonryImageBorderColor,
-          '--masonry-border-style': masonryImageBorderStyle, */
+          columnCount: columns,
+          columnGap: `${gap}px`
         },
         children: images.map((img, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
           className: "wpct_masonry_item",
+          style: {
+            marginBottom: `${gap}px`
+          },
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
             src: imageSize === 'custom' ? img?.url : img?.sizes?.[imageSize]?.url || img?.url,
             alt: img?.alt || '',
