@@ -151,7 +151,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			);
 
 			// FancyBox pagination
-
 			wp_enqueue_script(
 				'fancybox-layout',
 				plugins_url('src/photo-gallery/fancybox.js', __FILE__),

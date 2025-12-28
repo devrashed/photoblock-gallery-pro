@@ -125,8 +125,8 @@ export default function Edit({ attributes, setAttributes }) {
 
           <ToolbarButton
             icon="schedule"
-            isPressed={layoutType === 'masonry'}
-            onClick={() => setAttributes({ layoutType: 'masonry' })}
+            isPressed={layoutType === 'custom_masonry'}
+            onClick={() => setAttributes({ layoutType: 'custom_masonry' })}
           >
             {__('Masonry', 'photoblocks-gallery')}
           </ToolbarButton>
@@ -154,6 +154,14 @@ export default function Edit({ attributes, setAttributes }) {
             onClick={() => setAttributes({ layoutType: 'swiper' })}
            >
             {__('Swipper Gallery', 'photoblocks-gallery')}
+          </ToolbarButton>
+
+           <ToolbarButton
+            icon="cover-image"
+            isPressed={layoutType === 'fancybox'}
+            onClick={() => setAttributes({ layoutType: 'fancybox' })}
+           >
+            {__('Fancy box', 'photoblocks-gallery')}
           </ToolbarButton>
 
           {/* <ToolbarButton
@@ -187,10 +195,9 @@ export default function Edit({ attributes, setAttributes }) {
                 { label: 'Grid Layout', value: 'grid' },
                 { label: 'Lightbox Layout', value: 'lightbox' },
                 { label: 'Image browser Layout', value: 'imagebrowser' },
-                { label: 'Masonry Layout', value: 'masonry' },
+                { label: 'Masonry Layout', value: 'custom_masonry' },
                 { label: 'Infinite Carousel', value : 'infinite'},
                 { label: 'Swipper Gallery', value: 'swiper' },
-                { label: 'custom masonry', value: 'custom_masonry' },
                 { label: 'Fancy box', value: 'fancybox' },
                 { label: 'Wave Gallery (PRO 🔒)', value: 'wave', disabled: true },
                 { label: 'Image Center (PRO 🔒)', value: 'center', disabled: true },
@@ -305,7 +312,7 @@ export default function Edit({ attributes, setAttributes }) {
               </>
             )}
 
-            {(layoutType === 'grid' || layoutType === 'lightbox' || layoutType === 'masonry' || layoutType === 'custom_masonry' || layoutType === 'fancybox') && (
+            {(layoutType === 'grid' || layoutType === 'lightbox' || layoutType === 'custom_masonry' || layoutType === 'fancybox') && (
               <>
                 <ToggleControl
                   label={__('Pagination Show')}
@@ -460,7 +467,7 @@ export default function Edit({ attributes, setAttributes }) {
             )}
 
             {/* Masonry Layout Styles */}
-            {layoutType === 'masonry' || layoutType === 'custom_masonry' && (
+            { layoutType === 'custom_masonry' && (
               <>
                 <RangeControl
                   label={__('Border Radius (px)')}
@@ -675,38 +682,6 @@ export default function Edit({ attributes, setAttributes }) {
                         paddingTop: LighttBgap,
                         paddingBottom: LighttBgap
                       }}>{img.caption}</figcaption>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {layoutType === 'masonry' && (
-              <div
-                className="wpct_gallery__masonry"
-                style={{
-                  '--columns': columns,
-                  '--gap': `${gap}px`,
-                  '--border-radius': `${masonryBorderRadius}px`,
-                  '--border-width': `${masonryImageBorder}px`,
-                  '--border-color': masonryImageBorderColor,
-                  '--border-style': masonryImageBorderStyle,
-                  '--masonry-hover-effect': masonryHoverEffect,
-                  '--masonry-opacity': masonryImageOpacity
-                }}
-              >
-                {imagesToDisplay.map((img) => (
-                  <div key={img.id} className="wpct_gallery__masonry-item">
-                    <img
-                      src={imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url}
-                      alt={img.alt}
-                      style={imageSize === 'custom' ? {
-                        width: customWidth ? `${customWidth}px` : 'auto',
-                        height: customHeight ? `${customHeight}px` : 'auto',
-                      } : undefined}
-                    />
-                    {showCaptions && img.caption && (
-                      <figcaption className="wpct_gallery__masonry-caption">{img.caption}</figcaption>
                     )}
                   </div>
                 ))}

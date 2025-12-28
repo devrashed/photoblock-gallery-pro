@@ -802,7 +802,6 @@
   .wpg-article {
     display: flex;
     width: 200%;
-    /* animation: wpg-bannermove 20s linear infinite; */
     animation: wpg-bannermove var(--animation-speed) linear infinite;
   }
 
@@ -919,20 +918,6 @@
 
 
 /* ==== Custom Masonary ==== */
-
-/* .masonary_img_gallery{
-  -moz-column-width: 300px;
-       column-width: 300px;
-  -moz-column-gap: 5px;
-       column-gap: 5px;
-  padding: 5px;
-} */
-
-/* .masonary_img_gallery {
-  display: grid;
-  grid-template-columns: repeat(var(--columns), 1fr);
-  gap: var(--gap);
-} */
 
 .masonary_img_gallery {
   column-count: var(--columns);
