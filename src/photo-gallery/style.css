@@ -1982,7 +1982,7 @@ a comprehensive styling
   margin-top: 2rem;
   text-align: center;
   padding: 1rem 0;
-  /* display: block !important; */
+  display: block !important;
 }
 
 .my-gallery__pagination-btn {
@@ -2593,6 +2593,28 @@ a comprehensive styling
 }
 
 
+/* == Custom masonry pageniation === */
+
+.masonry_img_gallery {
+  column-count: var(--columns, 3);
+  column-gap: var(--gap, 16px);
+}
+.wpct_masonry_item {
+  break-inside: avoid;
+  margin-bottom: var(--gap, 16px);
+  display: block;
+}
+.my-gallery__pagination {
+  text-align: center;
+  margin-top: 1em;
+}
+.my-gallery__pagination button.active {
+  font-weight: bold;
+  background: #333;
+  color: #fff;
+}
+
+
 /* ====== FancyBox ======= */
 
 /* .wpc_container {
@@ -2638,4 +2660,21 @@ a comprehensive styling
     grid-template-columns: 1fr;
     grid-gap: 1rem;
   }
+}
+
+
+/* ==== Fancy Pagenation ===== */
+
+.my-gallery__pagination {
+  text-align: center;
+  margin-top: 1em;
+}
+.my-gallery__pagination-btn.active {
+  font-weight: bold;
+  background: #333;
+  color: #fff;
+}
+
+.wpc_card.hidden {
+  display: none !important;
 }

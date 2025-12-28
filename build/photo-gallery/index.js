@@ -1216,8 +1216,6 @@ function save({
           gridTemplateColumns: `repeat(${columns}, 1fr)`,
           gap: `${gap}px`
         },
-        "data-bg-color": gridBackgroundColor,
-        "data-caption-color": grindCaptionColor,
         "data-columns": columns,
         "data-gap": gap,
         "data-show-pagination": showPagination ? 'true' : 'false',
@@ -1229,20 +1227,16 @@ function save({
             height: customHeight ? `${customHeight}px` : 'auto'
           } : {};
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("figure", {
-            className: "wpc-gallery__item",
+            className: "my-gallery__item",
             "data-image-id": img.id || index,
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
               src: imageUrl,
               alt: img.alt || '',
               style: Object.keys(imageStyles).length > 0 ? imageStyles : undefined
-            }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("figcaption", {
-              style: {
-                backgroundColor: gridBackgroundColor,
-                color: grindCaptionColor,
-                paddingTop: GtBgap,
-                paddingBottom: GtBgap
-              },
-              children: [" ", img.caption, " "]
+            }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("figcaption", {
+              dangerouslySetInnerHTML: {
+                __html: img.caption
+              }
             })]
           }, img.id || index);
         })
@@ -1636,8 +1630,10 @@ function save({
         children: images.map((img, i) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
           className: "wpct_masonry_item",
           style: {
-            marginBottom: `${gap}px`
+            marginBottom: `${gap}px`,
+            display: showPagination && i >= itemsPerPage ? 'none' : 'block' // Hide items beyond first page initially
           },
+          "data-index": i,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
             src: imageSize === 'custom' ? img?.url : img?.sizes?.[imageSize]?.url || img?.url,
             alt: img?.alt || '',

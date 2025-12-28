@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.my-gallery__grid').forEach(function (gallery) {
-    const itemsPerPage = parseInt(gallery.getAttribute('data-items-per-page'), 10) || 12;
-    const items = Array.from(gallery.querySelectorAll('.my-gallery__item'));
+  document.querySelectorAll('.masonry_img_gallery').forEach(function (gallery) {
+    const itemsPerPage = parseInt(gallery.parentNode.querySelector('.my-gallery__pagination')?.getAttribute('data-items-per-page'), 10) || 12;
+    const items = Array.from(gallery.querySelectorAll('.wpct_masonry_item'));
     const pagination = gallery.parentNode.querySelector('.my-gallery__pagination');
-    if (!pagination) return;
+    if (!pagination || items.length <= itemsPerPage) return;
 
     let currentPage = 1;
     const totalPages = Math.ceil(items.length / itemsPerPage);

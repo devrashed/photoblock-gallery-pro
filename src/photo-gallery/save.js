@@ -77,8 +77,6 @@ export default function save({ attributes }) {
             gridTemplateColumns: `repeat(${columns}, 1fr)`,
             gap: `${gap}px`
           }}
-          data-bg-color={gridBackgroundColor}
-          data-caption-color={grindCaptionColor}
           data-columns={columns}
           data-gap={gap}
           data-show-pagination={showPagination ? 'true' : 'false'}
@@ -99,7 +97,7 @@ export default function save({ attributes }) {
             return (
               <figure 
                 key={img.id || index} 
-                className="wpc-gallery__item"
+                className="my-gallery__item"
                 data-image-id={img.id || index}
               >
                 <img
@@ -107,12 +105,8 @@ export default function save({ attributes }) {
                   alt={img.alt || ''}
                   style={Object.keys(imageStyles).length > 0 ? imageStyles : undefined}
                 />
-                 {showCaptions && img.caption && (
-                      <figcaption style={{ 
-                            backgroundColor: gridBackgroundColor, 
-                            color: grindCaptionColor,
-                            paddingTop:GtBgap,
-                            paddingBottom:GtBgap }}> {img.caption} </figcaption>
+                {showCaptions && img.caption && (
+                  <figcaption dangerouslySetInnerHTML={{ __html: img.caption }} />
                 )}
               </figure>
             );
@@ -529,49 +523,54 @@ export default function save({ attributes }) {
 
   } else if (layoutType === 'custom_masonry') {
   return (
-   <div {...blockProps}>
-      <div 
-        className="masonry_img_gallery"
-        style={{ 
-          columnCount: columns,
-          columnGap: `${gap}px`
-        }}
-      >
-        {images.map((img, i) => (
-          <div 
-            key={img?.id || i} 
-            className="wpct_masonry_item"
-            style={{ marginBottom: `${gap}px` }}
-          >
-            <img
-              src={
-                imageSize === 'custom'
-                  ? img?.url
-                  : img?.sizes?.[imageSize]?.url || img?.url
-              }
-              alt={img?.alt || ''}
-              style={
-                imageSize === 'custom'
-                  ? { width: customWidth ? `${customWidth}px` : 'auto' }
-                  : undefined
-              }
-            />
-            {showCaptions && img?.caption && (
-              <figcaption className="wpct_gallery__masonry-caption">
-                {img.caption}
-              </figcaption>
-            )}
-          </div>
-        ))}
-      </div>
-        {showPagination && images.length > itemsPerPage && (
-            <div
-              className="my-gallery__pagination"
-              data-total-items={images.length}
-              data-items-per-page={itemsPerPage}
-            />
+    <div {...blockProps}>
+    <div 
+      className="masonry_img_gallery"
+      style={{ 
+        columnCount: columns,
+        columnGap: `${gap}px`
+      }}
+    >
+      {images.map((img, i) => (
+        <div 
+          key={img?.id || i} 
+          className="wpct_masonry_item"
+          style={{ 
+            marginBottom: `${gap}px`,
+            display: showPagination && i >= itemsPerPage ? 'none' : 'block' // Hide items beyond first page initially
+          }}
+          data-index={i}
+        >
+          <img
+            src={
+              imageSize === 'custom'
+                ? img?.url
+                : img?.sizes?.[imageSize]?.url || img?.url
+            }
+            alt={img?.alt || ''}
+            style={
+              imageSize === 'custom'
+                ? { width: customWidth ? `${customWidth}px` : 'auto' }
+                : undefined
+            }
+          />
+          {showCaptions && img?.caption && (
+            <figcaption className="wpct_gallery__masonry-caption">
+              {img.caption}
+            </figcaption>
           )}
-    </div>
+        </div>
+      ))}
+    </div>      
+    {showPagination && images.length > itemsPerPage && (
+      <div 
+        className="my-gallery__pagination"
+        data-total-items={images.length}
+        data-items-per-page={itemsPerPage}
+      >
+      </div>
+    )}
+  </div>
   );
 
 }else if (layoutType === 'fancybox') {
@@ -628,14 +627,12 @@ export default function save({ attributes }) {
           className="my-gallery__pagination"
           data-total-items={images.length}
           data-items-per-page={itemsPerPage}
+          
         />
       )}
     </div>
       );
-
-
 }
-
 
   // Default fallback (should not reach here)
   return <div {...blockProps}></div>;

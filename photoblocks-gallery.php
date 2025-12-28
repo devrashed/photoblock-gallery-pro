@@ -105,9 +105,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			);
 
 
-			// imageviewr Frontend JavaScript (only on frontend)
+			// masonry Frontend JavaScript (only on frontend)
 
-	
 			wp_enqueue_script(
 				'mosonary-gallery-layout',
 				plugins_url('src/photo-gallery/masonary-frontend.js', __FILE__),
@@ -126,7 +125,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			);
 		
 			// Swiper JS (must load BEFORE your swiper file)
-		
 			wp_enqueue_script(
 				'swiper-bundle-js',
 				'https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.8.4/swiper-bundle.min.js',
@@ -142,7 +140,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 				filemtime(plugin_dir_path(__FILE__) . 'src/photo-gallery/swiper-frontend.js'),
 				true
 			);
-		
+
+			// Custom Masonary pagination
+			wp_enqueue_script(
+				'masonry-layout',
+				plugins_url('src/photo-gallery/custom-masonary-frontend.js', __FILE__),
+				array(), // <-- IMPORTANT
+				filemtime(plugin_dir_path(__FILE__) . 'src/photo-gallery/custom-masonary-frontend.js'),
+				true
+			);
+
+			// FancyBox pagination
+
+			wp_enqueue_script(
+				'fancybox-layout',
+				plugins_url('src/photo-gallery/fancybox.js', __FILE__),
+				array(), // <-- IMPORTANT
+				filemtime(plugin_dir_path(__FILE__) . 'src/photo-gallery/fancybox.js'),
+				true
+			);
+
 			// fancybox
 			wp_enqueue_style(
 				'fancybox-css',
@@ -159,8 +176,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				true
 			);	
 		}	
-
-		
 	}
 
 	

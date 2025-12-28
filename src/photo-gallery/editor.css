@@ -953,51 +953,8 @@
 
 /* ========= Fancybox ======== */
 
-
-/* .wpc_container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
-  justify-content: center;
-  align-items: center;
-}
-.wpc_card {
-  background: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
-  color: #333333;
-  border-radius: 2px;
-
-}
-.wpc_card-image {
-  background: #ffffff;
-  display: block;
-  padding-top: 70%;
-  position: relative;
-  width: 100%;
-}
-.wpc_card-image img {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-@media only screen and (max-width: 600px) {
-  .wpc_container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1rem;
-  }
-} */
-
-
 .wpc_container {
   display: grid;
-  /* grid-template-columns: repeat(var(--columns, 3), 1fr);
-  gap: var(--gap, 1rem); */
   justify-content: center;
   align-items: center;
 }
