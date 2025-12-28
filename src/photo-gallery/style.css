@@ -2505,12 +2505,21 @@ a comprehensive styling
 
 /* ==== Custom Masonary ==== */
 
-.masonary_img_gallery{
+/* .masonary_img_gallery{
   -moz-column-width: 300px;
        column-width: 300px;
   -moz-column-gap: 5px;
        column-gap: 5px;
   padding: 5px;
+} */
+
+/* .masonary_img_gallery {
+  column-count: var(--columns);
+  column-gap: var(--gap);
+}
+.wpct_masonry_item {
+  break-inside: avoid;
+  margin-bottom: var(--gap);
 }
 
 .masonary_img_gallery img{
@@ -2518,24 +2527,52 @@ a comprehensive styling
   margin-bottom: 5px; 
   border-radius: 8px;
   transition: transform 0.3s ease;
-}
+} */
+
+
 /* .masonary_img_gallery img:hover{
   transform: scale(1.05);
 } */
 
+
+.masonry_img_gallery {
+  column-count: var(--columns);
+  column-gap: var(--gap);
+  border: 0px;
+}
+
+.wpct_masonry_item {
+  break-inside: avoid;
+  margin-bottom: var(--gap);
+}
+
+.masonry_img_gallery img {
+  width: 100%;
+  margin-bottom: 5px;
+  border-radius: var(--masonry-border-radius, 0);
+  border-width: var(--masonry-border-width, 0);
+  border-style: var(--masonry-border-style, solid);
+  border-color: var(--masonry-border-color, transparent);
+  transition: transform 0.3s ease;
+}
+.masonry_img_gallery img:hover{
+  transform: scale(1.05);
+} 
+
+
 /* ====== FancyBox ======= */
 
-.wpc_container {
+/* .wpc_container {
   padding: 2rem 1rem;
   margin: 0 auto;
   max-width: 68rem;
   width: 100%;
-}
+} */
 
 .wpc_container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
+  grid-template-columns: repeat(var(--columns, 3), 1fr);
+  gap: var(--gap, 1rem);
   justify-content: center;
   align-items: center;
 }

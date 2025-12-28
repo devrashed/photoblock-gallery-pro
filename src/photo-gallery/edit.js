@@ -305,7 +305,7 @@ export default function Edit({ attributes, setAttributes }) {
               </>
             )}
 
-            {(layoutType === 'grid' || layoutType === 'lightbox' || layoutType === 'masonry') && (
+            {(layoutType === 'grid' || layoutType === 'lightbox' || layoutType === 'masonry' || layoutType === 'custom_masonry' || layoutType === 'fancybox') && (
               <>
                 <ToggleControl
                   label={__('Pagination Show')}
@@ -460,7 +460,7 @@ export default function Edit({ attributes, setAttributes }) {
             )}
 
             {/* Masonry Layout Styles */}
-            {layoutType === 'masonry' && (
+            {layoutType === 'masonry' || layoutType === 'custom_masonry' && (
               <>
                 <RangeControl
                   label={__('Border Radius (px)')}
@@ -884,79 +884,100 @@ export default function Edit({ attributes, setAttributes }) {
 
             )}
 
-             {layoutType === 'custom_masonry' && (
+            {layoutType === 'custom_masonry' && (
 
-                  <div className='masonary_img_gallery'>
-                    {images.map((img, i) => (
-                          <img
-                              key={i}
+                  <div className='masonary_img_gallery'
+                  style={{
+                  '--columns': columns,
+                  '--gap': `${gap}px`,
+                  '--border-radius': `${masonryBorderRadius}px`,
+                  '--border-width': `${masonryImageBorder}px`,
+                  '--border-color': masonryImageBorderColor,
+                  '--border-style': masonryImageBorderStyle,
+                  '--masonry-hover-effect': masonryHoverEffect,
+                  '--masonry-opacity': masonryImageOpacity
+                }}
+                  >
+                      {imagesToDisplay.map((img, i) => (
+                          <figure key={i} className="wpct_masonry_item"
+                         
+                          >
+                            <img
                               src={
-                                  imageSize === "custom"
-                                      ? img?.url
-                                      : img?.sizes?.[imageSize]?.url || img?.url
+                                imageSize === 'custom'
+                                  ? img?.url
+                                  : img?.sizes?.[imageSize]?.url || img?.url
                               }
-                              alt={img?.alt || ""}
+                              alt={img?.alt || ''}
                               style={
-                                  imageSize === "custom"
-                                      ? {
-                                            width: customWidth ? `${customWidth}px` : "auto",
-                                            height: customHeight ? `${customHeight}px` : "auto",
-                                        }
-                                      : undefined
+                                imageSize === 'custom'
+                                  ? {
+                                      width: customWidth ? `${customWidth}px` : 'auto',
+                                      height: customHeight ? `${customHeight}px` : 'auto',
+                                    }
+                                  : undefined
                               }
-                          />
+                            />
+
+                            {showCaptions && img?.caption && (
+                              <figcaption className="wpct_gallery__masonry-caption">
+                                {img.caption}
+                              </figcaption>
+                            )}
+                          </figure>   
                       ))}
+                      
                   </div>
-
             )} {layoutType === 'fancybox' && (
+                  <div
+                    className="wpc_container"
+                    style={{
+                      "--columns": columns,
+                      "--gap": `${gap}px`,
+                    }}
+                  >
+                    {imagesToDisplay.map((img, i) => {
+                      const imageUrl =
+                        imageSize === "custom"
+                          ? img?.url
+                          : img?.sizes?.[imageSize]?.url || img?.url;
 
-                  <div className="wpc_container">
-                    {images.map((img, i) => {
-                        const imageUrl =
-                            imageSize === "custom"
-                                ? img?.url
-                                : img?.sizes?.[imageSize]?.url || img?.url;
-                        return (
-                            <div className="wpc_card" key={i}>
-                                <div className="wpc_card-image">
-                                    <a
-                                        href={imageUrl}
-                                        data-fancybox="gallery"
-                                        data-caption={img?.caption || img?.alt || `Image ${i + 1}`}
-                                    >
-                                        <img
-                                            src={imageUrl}
-                                            alt={img?.alt || ""}
-                                            style={
-                                                imageSize === "custom"
-                                                    ? {
-                                                          width: customWidth
-                                                              ? `${customWidth}px`
-                                                              : "auto",
-                                                          height: customHeight
-                                                              ? `${customHeight}px`
-                                                              : "auto",
-                                                      }
-                                                    : undefined
-                                            }
-                                        />
-                                    </a>
-                                </div>
-                            </div>
-                        );
+                      return (
+                        <div className="wpc_card" key={i}>
+                          <div className="wpc_card-image">
+                            <a
+                              href={imageUrl}
+                              data-fancybox="gallery"
+                              {...(showCaptions && img?.caption
+                                ? { "data-caption": img.caption }
+                                : {})}
+                            >
+                              <img
+                                src={imageUrl}
+                                alt={img?.alt || ""}
+                                style={
+                                  imageSize === "custom"
+                                    ? {
+                                        width: customWidth ? `${customWidth}px` : "auto",
+                                        height: customHeight ? `${customHeight}px` : "auto",
+                                      }
+                                    : undefined
+                                }
+                              />
+                            </a>
+                          </div>
+                        </div>
+                      );
                     })}
                   </div>
 
+
             )}
-            
-
-
-            
-
+          
 
             {/* ======  Pagination Button ====== */}
 
-            {(layoutType === 'grid' || layoutType === 'lightbox' || layoutType === 'masonry') && showPagination && totalPages > 1 && (
+            {(layoutType === 'grid' || layoutType === 'lightbox' || layoutType === 'masonry' || layoutType === 'custom_masonry' || layoutType === 'fancybox' ) && showPagination && totalPages > 1 && (
               <div className="wpct_gallery__pagination" style={{ marginTop: '1em', textAlign: 'center' }} >
                 {Array.from({ length: totalPages }).map((_, i) => {
                   const page = i + 1;

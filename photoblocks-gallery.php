@@ -84,10 +84,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				filemtime(plugin_dir_path(__FILE__) . 'src/photo-gallery/frontend.js'),
 				true
 			);
-		}
-
-		// lightbox Frontend JavaScript (only on frontend)
-		if (!is_admin()) {
+		
+		  // lightbox Frontend JavaScript (only on frontend)
 			wp_enqueue_script(
 				'photo-gallery-block-lightbox',
 				plugins_url('src/photo-gallery/lightbox-frontned.js', __FILE__),
@@ -95,12 +93,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 				filemtime(plugin_dir_path(__FILE__) . 'src/photo-gallery/lightbox-frontned.js'),
 				true
 			);
-		}
+		
+			// imageviewr Frontend JavaScript (only on frontend)
 
-
-		// imageviewr Frontend JavaScript (only on frontend)
-
-		if (!is_admin()) {
 			wp_enqueue_script(
 				'imageviewr-gallery-layout',
 				plugins_url('src/photo-gallery/imageviewr-frontend.js', __FILE__),
@@ -108,11 +103,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				filemtime(plugin_dir_path(__FILE__) . 'src/photo-gallery/imageviewr-frontend.js'),
 				true
 			);
-		}
 
-		// imageviewr Frontend JavaScript (only on frontend)
 
-		if (!is_admin()) {
+			// imageviewr Frontend JavaScript (only on frontend)
+
+	
 			wp_enqueue_script(
 				'mosonary-gallery-layout',
 				plugins_url('src/photo-gallery/masonary-frontend.js', __FILE__),
@@ -120,28 +115,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 				filemtime(plugin_dir_path(__FILE__) . 'src/photo-gallery/masonary-frontend.js'),
 				true
 			);
-		}
-		// swiper Frontend JavaScript (only on frontend)
-		if (!is_admin()) {
-		wp_enqueue_style(
-        'swiper-gallery-style-frontend',
-        'https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.8.4/swiper-bundle.min.css',
-        array(),
-        null
-		);
-	}
-		// Swiper JS (must load BEFORE your swiper file)
-		if (!is_admin()) {
-		wp_enqueue_script(
-			'swiper-bundle-js',
-			'https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.8.4/swiper-bundle.min.js',
+		
+			// swiper Frontend JavaScript (only on frontend)
+		
+			wp_enqueue_style(
+			'swiper-gallery-style-frontend',
+			'https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.8.4/swiper-bundle.min.css',
 			array(),
-			null,
-			true
-		);
-	}
-		// Your swiper layout script (depends on Swiper)
-		if (!is_admin()) {
+			null
+			);
+		
+			// Swiper JS (must load BEFORE your swiper file)
+		
+			wp_enqueue_script(
+				'swiper-bundle-js',
+				'https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.8.4/swiper-bundle.min.js',
+				array(),
+				null,
+				true
+			);
+			// Swiper JS (must load BEFORE your swiper file)
 			wp_enqueue_script(
 				'swiper-gallery-layout',
 				plugins_url('src/photo-gallery/swiper-frontend.js', __FILE__),
@@ -149,54 +142,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 				filemtime(plugin_dir_path(__FILE__) . 'src/photo-gallery/swiper-frontend.js'),
 				true
 			);
-		}	
-	
-			if (!is_admin()) {
-				wp_enqueue_style(
-					'fancybox-css',
-					'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css',
-					[],
-					'3.5.7'
-				);
+		
+			// fancybox
+			wp_enqueue_style(
+				'fancybox-css',
+				'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css',
+				[],
+				'3.5.7'
+			);
 
-				wp_enqueue_script(
-					'fancybox-js',
-					'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js',
-					['jquery'],
-					'3.5.7',
-					true
-				);	
-			}	
+			wp_enqueue_script(
+				'fancybox-js',
+				'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js',
+				['jquery'],
+				'3.5.7',
+				true
+			);	
+		}	
 
 		
 	}
+
 	
 	add_action( 'init', 'wpct_photo_gallery_block_register_assets', 9 );
-
 
 	function wpc_fancybox_init_script() {
     if ( ! is_admin() ) {
         ?>
         <script>
-            /* jQuery(document).ready(function ($) {
-                $('[data-fancybox="gallery"]').fancybox({
-                    buttons: [
-                        "slideShow",
-                        "thumbs",
-                        "zoom",
-                        "fullScreen",
-                        "share",
-                        "close"
-                    ],
-                    loop: false,
-                    protect: true
-                });
-            }); */
-
 			jQuery(document).ready(function ($) {
 			jQuery('.wpc_container a[data-fancybox="gallery"]').fancybox({
 				loop: true,
-				//buttons: ["zoom", "slideShow", "thumbs", "close"]
 				 buttons: [
                         "slideShow",
                         "thumbs",
@@ -207,7 +183,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     ],
 				});
 			});
-				</script>
+		</script>
         <?php
     }
 }
