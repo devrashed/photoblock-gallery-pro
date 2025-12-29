@@ -868,39 +868,41 @@ export default function Edit({ attributes, setAttributes }) {
             )}
 
             {layoutType === 'infinite' && (
-
-              
-              <div className="wpg-section">                
-                <article className="wpg-article" style={{ '--animation-speed': `${animationSpeed}s` }}>
-                  <div className="wpg-div">
-                    <ul className="wpg-ul">
-                        {images.map((img) => (
-                          <li className="wpg-li" key={img.id} style={{ '--padding': `${imagepadding ?? 0}px` }}>
-                            <figure className="wpg-figure">
-                              <img src={imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url} alt={img.alt}
-                                  style={imageSize === 'custom' ? {
-                                    width: customWidth ? `${customWidth}px` : 'auto',
-                                    height: customHeight ? `${customHeight}px` : 'auto',
-                                  } : undefined
-                                  }
-                              />
-                               {showCaptions && img.caption && (
-                                <figcaption className="wpg-caption" 
-                                 style={{
-                                    backgroundColor: ImgbackgroundColor,
-                                    color: ImgCaptionColor,
-                                    textAlign: alignx,
-                                    padding: '6px 10px',
-                                  }} 
-                                >{img.caption}</figcaption>
-                              )}
-                            </figure>
-                          </li>
-                        ))}
-                      </ul>
-                  </div>
-                </article>
-              </div>
+            <div className="wpg-section">                
+              <article className="wpg-article" style={{ '--animation-speed': `${animationSpeed}s` }}>
+                <div className="wpg-div">
+                  <ul className="wpg-ul">
+                    {images.map((img) => (
+                      <li className="wpg-li" key={img.id} style={{ '--padding': `${imagepadding ?? 0}px` }}>
+                        <figure className={`wpg-figure size-${imageSize}`}>
+                            <img 
+                              src={imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url} 
+                              alt={img.alt}
+                              style={imageSize === 'custom' ? {
+                                width: customWidth ? `${customWidth}px` : 'auto',
+                                height: customHeight ? `${customHeight}px` : 'auto',
+                              } : undefined}
+                            />
+                            {/* {showCaptions && img.caption && (
+                              <figcaption 
+                                className="wpg-caption" 
+                                style={{
+                                  backgroundColor: ImgbackgroundColor,
+                                  color: ImgCaptionColor,
+                                  textAlign: alignx,
+                                  padding: '6px 10px',
+                                }} 
+                              >
+                                {img.caption}
+                              </figcaption>
+                            )} */}
+                        </figure>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            </div>
             )}
             
             {layoutType === 'swiper' && (

@@ -69,7 +69,7 @@ export default function save({ attributes }) {
     return (
       <div {...blockProps}>
         <div
-          className="my-gallery__grid"
+          className="wpct_gallery__grid"
           style={{ 
             '--columns': columns, 
             '--gap': `${gap}px`,
@@ -97,7 +97,7 @@ export default function save({ attributes }) {
             return (
               <figure 
                 key={img.id || index} 
-                className="my-gallery__item"
+                className="wpct_gallery__item"
                 data-image-id={img.id || index}
               >
                 <img

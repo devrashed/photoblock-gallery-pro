@@ -1034,25 +1034,16 @@ function Edit({
                   style: {
                     '--padding': `${imagepadding !== null && imagepadding !== void 0 ? imagepadding : 0}px`
                   },
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("figure", {
-                    className: "wpg-figure",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("figure", {
+                    className: `wpg-figure size-${imageSize}`,
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
                       src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
                       alt: img.alt,
                       style: imageSize === 'custom' ? {
                         width: customWidth ? `${customWidth}px` : 'auto',
                         height: customHeight ? `${customHeight}px` : 'auto'
                       } : undefined
-                    }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("figcaption", {
-                      className: "wpg-caption",
-                      style: {
-                        backgroundColor: ImgbackgroundColor,
-                        color: ImgCaptionColor,
-                        textAlign: alignx,
-                        padding: '6px 10px'
-                      },
-                      children: img.caption
-                    })]
+                    })
                   })
                 }, img.id))
               })
@@ -1269,7 +1260,7 @@ function save({
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
       ...blockProps,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-        className: "my-gallery__grid",
+        className: "wpct_gallery__grid",
         style: {
           '--columns': columns,
           '--gap': `${gap}px`,
@@ -1288,7 +1279,7 @@ function save({
             height: customHeight ? `${customHeight}px` : 'auto'
           } : {};
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("figure", {
-            className: "my-gallery__item",
+            className: "wpct_gallery__item",
             "data-image-id": img.id || index,
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
               src: imageUrl,

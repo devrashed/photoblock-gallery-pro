@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.my-gallery__grid').forEach(function (gallery) {
+  document.querySelectorAll('.wpct_gallery__grid').forEach(function (gallery) {
     const itemsPerPage = parseInt(gallery.getAttribute('data-items-per-page'), 10) || 12;
-    const items = Array.from(gallery.querySelectorAll('.my-gallery__item'));
+    const items = Array.from(gallery.querySelectorAll('.wpct_gallery__item')); 
     const pagination = gallery.parentNode.querySelector('.my-gallery__pagination');
     if (!pagination) return;
 
