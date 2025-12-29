@@ -116,7 +116,7 @@ export default function Edit({ attributes, setAttributes }) {
           </ToolbarButton>
 
           <ToolbarButton
-            icon="format-gallery"
+            icon="search"
             isPressed={layoutType === 'lightbox'}
             onClick={() => setAttributes({ layoutType: 'lightbox' })}
           >
@@ -124,7 +124,7 @@ export default function Edit({ attributes, setAttributes }) {
           </ToolbarButton>
 
           <ToolbarButton
-            icon="schedule"
+            icon="layout"
             isPressed={layoutType === 'custom_masonry'}
             onClick={() => setAttributes({ layoutType: 'custom_masonry' })}
           >
@@ -132,7 +132,7 @@ export default function Edit({ attributes, setAttributes }) {
           </ToolbarButton>
 
           <ToolbarButton
-            icon="cover-image"
+            icon="images-alt2"
             isPressed={layoutType === 'imagebrowser'}
             onClick={() => setAttributes({ layoutType: 'imagebrowser' })}
           >
@@ -140,28 +140,27 @@ export default function Edit({ attributes, setAttributes }) {
           </ToolbarButton>
 
           <ToolbarButton
-            icon="cover-image"
+            icon="controls-repeat"
             isPressed={layoutType === 'infinite'}
             onClick={() => setAttributes({ layoutType: 'infinite' })}
           >
             {__('Infinite Carousel', 'photoblocks-gallery')}
-          
-          </ToolbarButton>
-        
-           <ToolbarButton
-            icon="cover-image"
-            isPressed={layoutType === 'swiper'}
-            onClick={() => setAttributes({ layoutType: 'swiper' })}
-           >
-            {__('Swipper Gallery', 'photoblocks-gallery')}
           </ToolbarButton>
 
-           <ToolbarButton
-            icon="cover-image"
+          <ToolbarButton
+            icon="slides"
+            isPressed={layoutType === 'swiper'}
+            onClick={() => setAttributes({ layoutType: 'swiper' })}
+          >
+            {__('Swiper Gallery', 'photoblocks-gallery')}
+          </ToolbarButton>
+
+          <ToolbarButton
+            icon="admin-page"
             isPressed={layoutType === 'fancybox'}
             onClick={() => setAttributes({ layoutType: 'fancybox' })}
-           >
-            {__('Fancy box', 'photoblocks-gallery')}
+          >
+            {__('Fancy Box', 'photoblocks-gallery')}
           </ToolbarButton>
 
           {/* <ToolbarButton
@@ -188,22 +187,100 @@ export default function Edit({ attributes, setAttributes }) {
 
         <div className="tab-content-settings">
           <PanelBody title={__('Layout & Display')} initialOpen={true}>
-            <SelectControl
-              label={__('Gallery Layout')}
-              value={layoutType}
-              options={[
-                { label: 'Grid Layout', value: 'grid' },
-                { label: 'Lightbox Layout', value: 'lightbox' },
-                { label: 'Image browser Layout', value: 'imagebrowser' },
-                { label: 'Masonry Layout', value: 'custom_masonry' },
-                { label: 'Infinite Carousel', value : 'infinite'},
-                { label: 'Swipper Gallery', value: 'swiper' },
-                { label: 'Fancy box', value: 'fancybox' },
-                { label: 'Wave Gallery (PRO 🔒)', value: 'wave', disabled: true },
-                { label: 'Image Center (PRO 🔒)', value: 'center', disabled: true },
-              ]}
-              onChange={(value) => setAttributes({ layoutType: value })}
-            />
+
+            <div className="photoblocks-layout-selector">
+              <label className="components-base-control__label">
+                {__('Gallery Layout', 'photoblocks-gallery')}
+              </label>
+              <div className="layout-options-grid">
+                <button
+                  className={`layout-option ${layoutType === 'grid' ? 'is-active' : ''}`}
+                  onClick={() => setAttributes({ layoutType: 'grid' })}
+                  type="button"
+                >
+                  <span className="dashicons dashicons-grid-view"></span>
+                  <span className="layout-label">{__('Grid', 'photoblocks-gallery')}</span>
+                </button>
+
+                <button
+                  className={`layout-option ${layoutType === 'lightbox' ? 'is-active' : ''}`}
+                  onClick={() => setAttributes({ layoutType: 'lightbox' })}
+                  type="button"
+                >
+                  <span className="dashicons dashicons-search"></span>
+                  <span className="layout-label">{__('Lightbox', 'photoblocks-gallery')}</span>
+                </button>
+
+                <button
+                  className={`layout-option ${layoutType === 'imagebrowser' ? 'is-active' : ''}`}
+                  onClick={() => setAttributes({ layoutType: 'imagebrowser' })}
+                  type="button"
+                >
+                  <span className="dashicons dashicons-images-alt2"></span>
+                  <span className="layout-label">{__('Image Browser', 'photoblocks-gallery')}</span>
+                </button>
+
+                <button
+                  className={`layout-option ${layoutType === 'custom_masonry' ? 'is-active' : ''}`}
+                  onClick={() => setAttributes({ layoutType: 'custom_masonry' })}
+                  type="button"
+                >
+                  <span className="dashicons dashicons-layout"></span>
+                  <span className="layout-label">{__('Masonry', 'photoblocks-gallery')}</span>
+                </button>
+
+                <button
+                  className={`layout-option ${layoutType === 'infinite' ? 'is-active' : ''}`}
+                  onClick={() => setAttributes({ layoutType: 'infinite' })}
+                  type="button"
+                >
+                  <span className="dashicons dashicons-controls-repeat"></span>
+                  <span className="layout-label">{__('Infinite Carousel', 'photoblocks-gallery')}</span>
+                </button>
+
+                <button
+                  className={`layout-option ${layoutType === 'swiper' ? 'is-active' : ''}`}
+                  onClick={() => setAttributes({ layoutType: 'swiper' })}
+                  type="button"
+                >
+                  <span className="dashicons dashicons-slides"></span>
+                  <span className="layout-label">{__('Swiper Gallery', 'photoblocks-gallery')}</span>
+                </button>
+
+                <button
+                  className={`layout-option ${layoutType === 'fancybox' ? 'is-active' : ''}`}
+                  onClick={() => setAttributes({ layoutType: 'fancybox' })}
+                  type="button"
+                >
+                  <span className="dashicons dashicons-admin-page"></span>
+                  <span className="layout-label">{__('Fancy Box', 'photoblocks-gallery')}</span>
+                </button>
+
+                <button
+                  className="layout-option is-disabled"
+                  disabled
+                  type="button"
+                >
+                  <span className="dashicons dashicons-chart-line"></span>
+                  <span className="layout-label">
+                    {__('Wave Gallery', 'photoblocks-gallery')}
+                    <span className="pro-badge">PRO 🔒</span>
+                  </span>
+                </button>
+
+                <button
+                  className="layout-option is-disabled"
+                  disabled
+                  type="button"
+                >
+                  <span className="dashicons dashicons-align-center"></span>
+                  <span className="layout-label">
+                    {__('Image Center', 'photoblocks-gallery')}
+                    <span className="pro-badge">PRO 🔒</span>
+                  </span>
+                </button>
+              </div>
+            </div>  
 
             {layoutType !== 'infinite' && layoutType !== 'imagebrowser' && layoutType !== 'swiper' && (
               <RangeControl

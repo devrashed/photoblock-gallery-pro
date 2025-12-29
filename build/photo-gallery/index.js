@@ -132,47 +132,47 @@ function Edit({
           }),
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Grid', 'photoblocks-gallery')
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
-          icon: "format-gallery",
+          icon: "search",
           isPressed: layoutType === 'lightbox',
           onClick: () => setAttributes({
             layoutType: 'lightbox'
           }),
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Lightbox', 'photoblocks-gallery')
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
-          icon: "schedule",
+          icon: "layout",
           isPressed: layoutType === 'custom_masonry',
           onClick: () => setAttributes({
             layoutType: 'custom_masonry'
           }),
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Masonry', 'photoblocks-gallery')
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
-          icon: "cover-image",
+          icon: "images-alt2",
           isPressed: layoutType === 'imagebrowser',
           onClick: () => setAttributes({
             layoutType: 'imagebrowser'
           }),
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Browser', 'photoblocks-gallery')
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
-          icon: "cover-image",
+          icon: "controls-repeat",
           isPressed: layoutType === 'infinite',
           onClick: () => setAttributes({
             layoutType: 'infinite'
           }),
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Infinite Carousel', 'photoblocks-gallery')
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
-          icon: "cover-image",
+          icon: "slides",
           isPressed: layoutType === 'swiper',
           onClick: () => setAttributes({
             layoutType: 'swiper'
           }),
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Swipper Gallery', 'photoblocks-gallery')
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Swiper Gallery', 'photoblocks-gallery')
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
-          icon: "cover-image",
+          icon: "admin-page",
           isPressed: layoutType === 'fancybox',
           onClick: () => setAttributes({
             layoutType: 'fancybox'
           }),
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Fancy box', 'photoblocks-gallery')
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Fancy Box', 'photoblocks-gallery')
         })]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
@@ -181,42 +181,125 @@ function Edit({
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
           title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Layout & Display'),
           initialOpen: true,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
-            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Gallery Layout'),
-            value: layoutType,
-            options: [{
-              label: 'Grid Layout',
-              value: 'grid'
-            }, {
-              label: 'Lightbox Layout',
-              value: 'lightbox'
-            }, {
-              label: 'Image browser Layout',
-              value: 'imagebrowser'
-            }, {
-              label: 'Masonry Layout',
-              value: 'custom_masonry'
-            }, {
-              label: 'Infinite Carousel',
-              value: 'infinite'
-            }, {
-              label: 'Swipper Gallery',
-              value: 'swiper'
-            }, {
-              label: 'Fancy box',
-              value: 'fancybox'
-            }, {
-              label: 'Wave Gallery (PRO 🔒)',
-              value: 'wave',
-              disabled: true
-            }, {
-              label: 'Image Center (PRO 🔒)',
-              value: 'center',
-              disabled: true
-            }],
-            onChange: value => setAttributes({
-              layoutType: value
-            })
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "photoblocks-layout-selector",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+              className: "components-base-control__label",
+              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Gallery Layout', 'photoblocks-gallery')
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "layout-options-grid",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                className: `layout-option ${layoutType === 'grid' ? 'is-active' : ''}`,
+                onClick: () => setAttributes({
+                  layoutType: 'grid'
+                }),
+                type: "button",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "dashicons dashicons-grid-view"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "layout-label",
+                  children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Grid', 'photoblocks-gallery')
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                className: `layout-option ${layoutType === 'lightbox' ? 'is-active' : ''}`,
+                onClick: () => setAttributes({
+                  layoutType: 'lightbox'
+                }),
+                type: "button",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "dashicons dashicons-search"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "layout-label",
+                  children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Lightbox', 'photoblocks-gallery')
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                className: `layout-option ${layoutType === 'imagebrowser' ? 'is-active' : ''}`,
+                onClick: () => setAttributes({
+                  layoutType: 'imagebrowser'
+                }),
+                type: "button",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "dashicons dashicons-images-alt2"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "layout-label",
+                  children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Browser', 'photoblocks-gallery')
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                className: `layout-option ${layoutType === 'custom_masonry' ? 'is-active' : ''}`,
+                onClick: () => setAttributes({
+                  layoutType: 'custom_masonry'
+                }),
+                type: "button",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "dashicons dashicons-layout"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "layout-label",
+                  children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Masonry', 'photoblocks-gallery')
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                className: `layout-option ${layoutType === 'infinite' ? 'is-active' : ''}`,
+                onClick: () => setAttributes({
+                  layoutType: 'infinite'
+                }),
+                type: "button",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "dashicons dashicons-controls-repeat"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "layout-label",
+                  children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Infinite Carousel', 'photoblocks-gallery')
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                className: `layout-option ${layoutType === 'swiper' ? 'is-active' : ''}`,
+                onClick: () => setAttributes({
+                  layoutType: 'swiper'
+                }),
+                type: "button",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "dashicons dashicons-slides"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "layout-label",
+                  children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Swiper Gallery', 'photoblocks-gallery')
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                className: `layout-option ${layoutType === 'fancybox' ? 'is-active' : ''}`,
+                onClick: () => setAttributes({
+                  layoutType: 'fancybox'
+                }),
+                type: "button",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "dashicons dashicons-admin-page"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "layout-label",
+                  children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Fancy Box', 'photoblocks-gallery')
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                className: "layout-option is-disabled",
+                disabled: true,
+                type: "button",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "dashicons dashicons-chart-line"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                  className: "layout-label",
+                  children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Wave Gallery', 'photoblocks-gallery'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    className: "pro-badge",
+                    children: "PRO \uD83D\uDD12"
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
+                className: "layout-option is-disabled",
+                disabled: true,
+                type: "button",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "dashicons dashicons-align-center"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+                  className: "layout-label",
+                  children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Center', 'photoblocks-gallery'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                    className: "pro-badge",
+                    children: "PRO \uD83D\uDD12"
+                  })]
+                })]
+              })]
+            })]
           }), layoutType !== 'infinite' && layoutType !== 'imagebrowser' && layoutType !== 'swiper' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Images Per Row'),
             value: columns,

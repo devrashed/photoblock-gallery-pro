@@ -23,9 +23,7 @@
     "imagepadding": {"type": "number", "default": 2},
     "animationSpeed": {"type": "string", "default": 25},
     "swiperautoplay": {"type": "boolean", "default": true},
-    "autoplayDelay": {"type": "number","default": 1500}
-    
-    
+    "autoplayDelay": {"type": "number","default": 1500}    
   },
   "supports": {
     "html": false,

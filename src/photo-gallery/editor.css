@@ -1,3 +1,83 @@
+.photoblocks-layout-selector {
+  margin-bottom: 20px;
+}
+
+.photoblocks-layout-selector .components-base-control__label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.layout-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+}
+
+.layout-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 75px;
+}
+
+.layout-option:hover:not(.is-disabled) {
+  border-color: #2271b1;
+  background: #f6f7f7;
+}
+
+.layout-option.is-active {
+  border-color: #2271b1;
+  background: #f0f6fc;
+  box-shadow: 0 0 0 1px #2271b1;
+}
+
+.layout-option .dashicons {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  color: #1e1e1e;
+  margin-bottom: 6px;
+}
+
+.layout-option.is-active .dashicons {
+  color: #2271b1;
+}
+
+.layout-option .layout-label {
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.3;
+  color: #1e1e1e;
+  font-weight: 500;
+}
+
+.layout-option.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f6f7f7;
+}
+
+.layout-option .pro-badge {
+  display: block;
+  font-size: 9px;
+  color: #d63638;
+  margin-top: 2px;
+}
+
+/* === ENd the icon === */
+
+
+
+
 /* Grid Layout */
 .wpct_gallery__grid {
   display: grid;
@@ -801,7 +881,7 @@
   }
   .wpg-article {
     display: flex;
-    width: 200%;
+    width: 100%;
     animation: wpg-bannermove var(--animation-speed) linear infinite;
   }
 
