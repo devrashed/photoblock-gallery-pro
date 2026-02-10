@@ -36,6 +36,7 @@ function Edit({
     columns = 3,
     gap = 16,
     showCaptions = true,
+    captionStyle = '1',
     imageSize = 'full',
     customWidth = 0,
     customHeight = 0,
@@ -313,6 +314,37 @@ function Edit({
             checked: showCaptions,
             onChange: value => setAttributes({
               showCaptions: value
+            })
+          }), showCaptions && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+            label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Caption Style'),
+            value: captionStyle,
+            options: [{
+              label: 'Slide from Bottom',
+              value: '1'
+            }, {
+              label: 'Centered Fade',
+              value: '2'
+            }, {
+              label: 'Slide from Left',
+              value: '3'
+            }, {
+              label: 'Fade Overlay',
+              value: '4'
+            }, {
+              label: 'Side Slide',
+              value: '5'
+            }, {
+              label: '3D Flip Card',
+              value: '6'
+            }, {
+              label: 'Wave Animation',
+              value: '7'
+            }, {
+              label: 'Circle Reveal',
+              value: '8'
+            }],
+            onChange: value => setAttributes({
+              captionStyle: value
             })
           }), layoutType == 'swiper' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Autoplay'),
@@ -895,33 +927,33 @@ function Edit({
         })
       }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
         children: [layoutType === 'grid' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-          className: "style-1",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-            className: "wpct_gallery__grid",
-            style: {
-              '--columns': columns,
-              '--gap': `${gap}px`
-            },
-            children: imagesToDisplay.map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-              className: "wpct_gallery__item",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
-                src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
-                alt: img.alt,
-                style: imageSize === 'custom' ? {
-                  width: customWidth ? `${customWidth}px` : 'auto',
-                  height: customHeight ? `${customHeight}px` : 'auto'
-                } : undefined
-              }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("figcaption", {
-                style: {
-                  backgroundColor: gridBackgroundColor,
-                  color: grindCaptionColor,
-                  paddingTop: GtBgap,
-                  paddingBottom: GtBgap
-                },
-                children: [" ", img.caption]
-              })]
-            }, img.id))
-          })
+          className: "wpct_gallery__grid",
+          style: {
+            '--columns': columns,
+            '--gap': `${gap}px`
+          },
+          children: imagesToDisplay.map(img =>
+          /*#__PURE__*/
+          //captionStyle
+          (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("figure", {
+            className: `style-${captionStyle} wpct_gallery__item`,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+              src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
+              alt: img.alt,
+              style: imageSize === 'custom' ? {
+                width: customWidth ? `${customWidth}px` : 'auto',
+                height: customHeight ? `${customHeight}px` : 'auto'
+              } : undefined
+            }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("figcaption", {
+              style: {
+                backgroundColor: gridBackgroundColor,
+                color: grindCaptionColor,
+                paddingTop: GtBgap,
+                paddingBottom: GtBgap
+              },
+              children: img.caption
+            })]
+          }, img.id))
         }), layoutType === 'lightbox' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
           className: "wpct_gallery__lightbox-grid",
           style: {

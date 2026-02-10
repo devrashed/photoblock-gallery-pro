@@ -71,18 +71,18 @@ export default function save({ attributes }) {
     return (
       <div {...blockProps}>
         <div
-          className="wpct_gallery__grid"
-          style={{ 
-            '--columns': columns, 
-            '--gap': `${gap}px`,
-            display: 'grid',
-            gridTemplateColumns: `repeat(${columns}, 1fr)`,
-            gap: `${gap}px`
-          }}
-          data-columns={columns}
-          data-gap={gap}
-          data-show-pagination={showPagination ? 'true' : 'false'}
-          data-items-per-page={itemsPerPage}
+            className="wpct_gallery__grid"
+            style={{ 
+              '--columns': columns, 
+              '--gap': `${gap}px`,
+              display: 'grid',
+              gridTemplateColumns: `repeat(${columns}, 1fr)`,
+              gap: `${gap}px`
+            }}
+            data-columns={columns}
+            data-gap={gap}
+            data-show-pagination={showPagination ? 'true' : 'false'}
+            data-items-per-page={itemsPerPage}
         >
           {images.map((img, index) => {
             const imageUrl = imageSize === 'custom' 
@@ -96,30 +96,27 @@ export default function save({ attributes }) {
                 }
               : {};
 
-            return (
-              <figure 
-                key={img.id || index} 
-                className="wpct_gallery__item"
-                data-image-id={img.id || index}
-              >
-                <img
-                  src={imageUrl}
-                  alt={img.alt || ''}
-                  style={Object.keys(imageStyles).length > 0 ? imageStyles : undefined}
-                />
-                {showCaptions && img.caption && (
-                  <figcaption 
-                  style={{
-                      backgroundColor: gridBackgroundColor,
-                      color: grindCaptionColor
-                  }}
-                  dangerouslySetInnerHTML={{ __html: img.caption }} />
-                )}
-              </figure>
-
-              
-
-            );
+              return (
+                <figure 
+                  key={img.id || index} 
+                  className="wpct_gallery__item"
+                  data-image-id={img.id || index}
+                >
+                  <img
+                    src={imageUrl}
+                    alt={img.alt || ''}
+                    style={Object.keys(imageStyles).length > 0 ? imageStyles : undefined}
+                  />
+                  {showCaptions && img.caption && (
+                    <figcaption 
+                    style={{
+                        backgroundColor: gridBackgroundColor,
+                        color: grindCaptionColor
+                    }}
+                    dangerouslySetInnerHTML={{ __html: img.caption }} />
+                  )}
+                </figure>
+              );
           })}
         </div>
 

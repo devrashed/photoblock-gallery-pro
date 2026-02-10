@@ -29,6 +29,10 @@ return array(
 				'type' => 'boolean',
 				'default' => true
 			),
+			'captionStyle' => array(
+				'type' => 'string',
+				'default' => '1'
+			),
 			'imageSize' => array(
 				'type' => 'string',
 				'default' => 'full'

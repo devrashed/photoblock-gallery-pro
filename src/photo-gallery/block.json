@@ -12,6 +12,7 @@
     "columns": { "type": "number", "default": 3},
     "gap": { "type": "number","default": 16},
     "showCaptions": { "type": "boolean", "default": true},
+    "captionStyle": { "type": "string", "default": "1"},
     "imageSize": { "type": "string", "default": "full"},
     "customWidth": { "type": "number", "default": 0},
     "customHeight": { "type": "number", "default": 0},

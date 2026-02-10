@@ -24,6 +24,10 @@
       "type": "boolean",
       "default": true
     },
+    "captionStyle": {
+      "type": "string",
+      "default": "1"
+    },
     "imageSize": {
       "type": "string",
       "default": "full"

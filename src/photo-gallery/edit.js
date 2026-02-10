@@ -5,6 +5,7 @@ import { ToolbarGroup, RadioControl, ToolbarButton, Button, PanelBody, RangeCont
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
+
 export default function Edit({ attributes, setAttributes }) {
 
   const {
@@ -12,6 +13,7 @@ export default function Edit({ attributes, setAttributes }) {
     columns = 3,
     gap = 16,
     showCaptions = true,
+    captionStyle = '1',
     imageSize = 'full',
     customWidth = 0,
     customHeight = 0,
@@ -292,6 +294,23 @@ export default function Edit({ attributes, setAttributes }) {
               checked={showCaptions}
               onChange={(value) => setAttributes({ showCaptions: value })}
             />
+            {showCaptions && (
+                <SelectControl
+                  label={__('Caption Style')}
+                  value={captionStyle}
+                  options={[
+                    { label: 'Slide from Bottom', value: '1' },
+                    { label: 'Centered Fade', value: '2' },
+                    { label: 'Slide from Left', value: '3' },
+                    { label: 'Fade Overlay', value: '4' },
+                    { label: 'Side Slide', value: '5' },
+                    { label: '3D Flip Card', value: '6' },
+                    { label: 'Wave Animation', value: '7' },
+                    { label: 'Circle Reveal', value: '8' }
+                  ]}
+                  onChange={(value) => setAttributes({ captionStyle: value })}
+                />
+            )}
 
           {layoutType == 'swiper' && (
               <ToggleControl
@@ -332,7 +351,8 @@ export default function Edit({ attributes, setAttributes }) {
               ]}
               onChange={(value) => setAttributes({ imageSize: value })}
             />
-      
+
+           
 
             {imageSize === 'custom' && (
               <>
@@ -686,33 +706,29 @@ export default function Edit({ attributes, setAttributes }) {
           <Fragment>
 
             {layoutType === 'grid' && (
-                <div className="style-1">
                   <div className="wpct_gallery__grid"
-                    style={{ '--columns': columns, '--gap': `${gap}px` }}>
-                    {imagesToDisplay.map((img) => (
-                      <div key={img.id} className="wpct_gallery__item">
+                    style={{ '--columns': columns, '--gap': `${gap}px` }}>     
+                    {imagesToDisplay.map((img) => ( //captionStyle
+                      <figure key={img.id} className={`style-${captionStyle} wpct_gallery__item`}>
                         <img
-                          src={imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url} alt={img.alt}
+                          src={imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url}
+                          alt={img.alt}
                           style={imageSize === 'custom' ? {
                             width: customWidth ? `${customWidth}px` : 'auto',
                             height: customHeight ? `${customHeight}px` : 'auto',
-                          } : undefined
-                          }
+                          } : undefined}
                         />
-                          
-                              {showCaptions && img.caption && (
-                                  <figcaption style={{
-                                    backgroundColor: gridBackgroundColor,
-                                    color: grindCaptionColor,
-                                    paddingTop: GtBgap,
-                                    paddingBottom: GtBgap
-                                  }}> {img.caption}</figcaption>
-                              )}
-                        
-                      </div>
+                        {showCaptions && img.caption && (
+                          <figcaption style={{
+                            backgroundColor: gridBackgroundColor,
+                            color: grindCaptionColor,
+                            paddingTop: GtBgap,
+                            paddingBottom: GtBgap
+                          }}>{img.caption}</figcaption>
+                        )}
+                      </figure>
                     ))}
                   </div>
-               </div>
             )}
 
             {layoutType === 'lightbox' && (
