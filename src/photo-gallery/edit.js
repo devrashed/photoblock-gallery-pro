@@ -53,6 +53,9 @@ export default function Edit({ attributes, setAttributes }) {
     // Masonry Style attributes (additional to existing)
     masonryHoverEffect = 'lift',
     masonryImageOpacity = 1,
+    masonryBackgroundColor = '#000000',
+    masonryCaptionColor = '#ffffff',
+  
 
     // Infinite Carousel attributes
     alignx='center',
@@ -163,22 +166,6 @@ export default function Edit({ attributes, setAttributes }) {
             {__('Fancy Box', 'photoblocks-gallery')}
           </ToolbarButton>
 
-          {/* <ToolbarButton
-            icon="cover-image"
-            disabled={true}
-          >
-            {__('Wave Gallery', 'photoblocks-gallery')}
-            <span className="pro-badge">PRO</span>
-          </ToolbarButton>
-
-          <ToolbarButton
-            icon="cover-image"
-            disabled={true}
-          >
-            {__('Image Center', 'photoblocks-gallery')}
-            <span className="pro-badge">PRO</span>
-          </ToolbarButton> */}
-
         </ToolbarGroup>
       </BlockControls>
 
@@ -254,31 +241,7 @@ export default function Edit({ attributes, setAttributes }) {
                 >
                   <span className="dashicons dashicons-admin-page"></span>
                   <span className="layout-label">{__('Fancy Box', 'photoblocks-gallery')}</span>
-                </button>
-
-                <button
-                  className="layout-option is-disabled"
-                  disabled
-                  type="button"
-                >
-                  <span className="dashicons dashicons-chart-line"></span>
-                  <span className="layout-label">
-                    {__('Wave Gallery', 'photoblocks-gallery')}
-                    <span className="pro-badge">PRO 🔒</span>
-                  </span>
-                </button>
-
-                <button
-                  className="layout-option is-disabled"
-                  disabled
-                  type="button"
-                >
-                  <span className="dashicons dashicons-align-center"></span>
-                  <span className="layout-label">
-                    {__('Image Center', 'photoblocks-gallery')}
-                    <span className="pro-badge">PRO 🔒</span>
-                  </span>
-                </button>
+                </button>                
               </div>
             </div>  
 
@@ -340,7 +303,7 @@ export default function Edit({ attributes, setAttributes }) {
           }  
           {layoutType == 'swiper' && (
 
-                      <SelectControl
+                <SelectControl
                 label={ __('Autoplay Delay (ms)') }
                 value={ autoplayDelay }
                 options={[
@@ -369,6 +332,7 @@ export default function Edit({ attributes, setAttributes }) {
               ]}
               onChange={(value) => setAttributes({ imageSize: value })}
             />
+      
 
             {imageSize === 'custom' && (
               <>
@@ -546,7 +510,7 @@ export default function Edit({ attributes, setAttributes }) {
             {/* Masonry Layout Styles */}
             { layoutType === 'custom_masonry' && (
               <>
-                <RangeControl
+                {/* <RangeControl
                   label={__('Border Radius (px)')}
                   value={masonryBorderRadius}
                   onChange={(value) => setAttributes({ masonryBorderRadius: value })}
@@ -560,7 +524,32 @@ export default function Edit({ attributes, setAttributes }) {
                   onChange={(value) => setAttributes({ masonryImageBorder: value })}
                   min={0}
                   max={20}
-                />
+                /> */}
+
+                <div style={{ marginBottom: '16px' }}>
+                      <label style={{ display: 'block', marginBottom: '4px', fontSize: '11px', fontWeight: '500', textTransform: 'uppercase' }}>
+                        {__('Background Color')}
+                      </label>
+                      <input
+                        type="color"
+                        value={masonryBackgroundColor}
+                        onChange={(e) => setAttributes({ masonryBackgroundColor: e.target.value })}
+                        style={{ width: '100%', height: '32px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                      />
+                </div>
+
+                <div style={{ marginBottom: '16px' }}>
+                      <label style={{ display: 'block', marginBottom: '4px', fontSize: '11px', fontWeight: '500', textTransform: 'uppercase' }}>
+                        {__('Caption Color')}
+                      </label>
+                      <input
+                        type="color"
+                        value={masonryCaptionColor}
+                        onChange={(e) => setAttributes({ masonryCaptionColor: e.target.value })}
+                        style={{ width: '100%', height: '32px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                      />
+                </div>
+
 
                 {masonryImageBorder > 0 && (
                   <>
@@ -588,8 +577,6 @@ export default function Edit({ attributes, setAttributes }) {
                     </div>
                   </>
                 )}
-
-
               </>
             )}
 
@@ -699,31 +686,33 @@ export default function Edit({ attributes, setAttributes }) {
           <Fragment>
 
             {layoutType === 'grid' && (
-              <div
-                className="wpct_gallery__grid"
-                style={{ '--columns': columns, '--gap': `${gap}px` }}
-              >
-                {imagesToDisplay.map((img) => (
-                  <div key={img.id} className="wpct_gallery__item">
-                    <img
-                      src={imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url} alt={img.alt}
-                      style={imageSize === 'custom' ? {
-                        width: customWidth ? `${customWidth}px` : 'auto',
-                        height: customHeight ? `${customHeight}px` : 'auto',
-                      } : undefined
-                      }
-                    />
-                    {showCaptions && img.caption && (
-                      <figcaption style={{
-                        backgroundColor: gridBackgroundColor,
-                        color: grindCaptionColor,
-                        paddingTop: GtBgap,
-                        paddingBottom: GtBgap
-                      }}> {img.caption}</figcaption>
-                    )}
+                <div className="style-1">
+                  <div className="wpct_gallery__grid"
+                    style={{ '--columns': columns, '--gap': `${gap}px` }}>
+                    {imagesToDisplay.map((img) => (
+                      <div key={img.id} className="wpct_gallery__item">
+                        <img
+                          src={imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url} alt={img.alt}
+                          style={imageSize === 'custom' ? {
+                            width: customWidth ? `${customWidth}px` : 'auto',
+                            height: customHeight ? `${customHeight}px` : 'auto',
+                          } : undefined
+                          }
+                        />
+                          
+                              {showCaptions && img.caption && (
+                                  <figcaption style={{
+                                    backgroundColor: gridBackgroundColor,
+                                    color: grindCaptionColor,
+                                    paddingTop: GtBgap,
+                                    paddingBottom: GtBgap
+                                  }}> {img.caption}</figcaption>
+                              )}
+                        
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+               </div>
             )}
 
             {layoutType === 'lightbox' && (
@@ -974,7 +963,12 @@ export default function Edit({ attributes, setAttributes }) {
                             />
 
                             {showCaptions && img?.caption && (
-                              <figcaption className="wpct_gallery__masonry-caption">
+                              <figcaption className="wpct_gallery__masonry-caption" style={{
+                                backgroundColor: masonryBackgroundColor,
+                                color: masonryCaptionColor,
+                                padding: '15px 10px',
+                                textAlign: 'center',
+                              }}>
                                 {img.caption}
                               </figcaption>
                             )}

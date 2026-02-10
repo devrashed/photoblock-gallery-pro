@@ -37,6 +37,8 @@ export default function save({ attributes }) {
     masonryImageBorder = 0,
     masonryImageBorderColor = '#e0e0e0',
     masonryImageBorderStyle = 'solid',
+    masonryBackgroundColor = '#000000',
+    masonryCaptionColor = '#ffffff',
 
     // Infinite Carousel attributes
     alignx='center',
@@ -106,9 +108,17 @@ export default function save({ attributes }) {
                   style={Object.keys(imageStyles).length > 0 ? imageStyles : undefined}
                 />
                 {showCaptions && img.caption && (
-                  <figcaption dangerouslySetInnerHTML={{ __html: img.caption }} />
+                  <figcaption 
+                  style={{
+                      backgroundColor: gridBackgroundColor,
+                      color: grindCaptionColor
+                  }}
+                  dangerouslySetInnerHTML={{ __html: img.caption }} />
                 )}
               </figure>
+
+              
+
             );
           })}
         </div>
@@ -180,12 +190,12 @@ export default function save({ attributes }) {
                     </div>
                   </div>
                   {showCaptions && img.caption && (
-                    
+                                        
                      <figcaption style={{ 
-                            backgroundColor: LightBackgroundColor, 
-                            color: LightCaptionColor,
-                            paddingTop:LighttBgap,
-                            paddingBottom:LighttBgap }}> {img.caption} </figcaption>
+                      backgroundColor: LightBackgroundColor, 
+                      color: LightCaptionColor,
+                      paddingTop:LighttBgap,
+                      paddingBottom:LighttBgap }}> {img.caption} </figcaption>
                   )}
               </figure>
             );
@@ -207,7 +217,12 @@ export default function save({ attributes }) {
             <button className="my-gallery__lightbox-next" aria-label="Next image">❯</button>
             <div className="my-gallery__lightbox-content">
               <img className="my-gallery__lightbox-image" src="" alt="" />
-              <div className="my-gallery__lightbox-caption"></div>
+              <div className="my-gallery__lightbox-caption" 
+              style={{ 
+                backgroundColor: LightBackgroundColor, 
+                color: LightCaptionColor
+              }}
+                ></div>
             </div>
           </div>
         </div>
@@ -445,59 +460,63 @@ export default function save({ attributes }) {
         </div>
     );     
 
-  } else if (layoutType === 'custom_masonry') {
-  return (
-    <div {...blockProps}>
-    <div 
-      className="masonry_img_gallery"
-      style={{ 
-        columnCount: columns,
-        columnGap: `${gap}px`
-      }}
-    >
-      {images.map((img, i) => (
+    } else if (layoutType === 'custom_masonry') {
+      return (
+        <div {...blockProps}>
         <div 
-          key={img?.id || i} 
-          className="wpct_masonry_item"
+          className="masonry_img_gallery"
           style={{ 
-            marginBottom: `${gap}px`,
-            display: showPagination && i >= itemsPerPage ? 'none' : 'block' // Hide items beyond first page initially
+            columnCount: columns,
+            columnGap: `${gap}px`
           }}
-          data-index={i}
         >
-          <img
-            src={
-              imageSize === 'custom'
-                ? img?.url
-                : img?.sizes?.[imageSize]?.url || img?.url
-            }
-            alt={img?.alt || ''}
-            style={
-              imageSize === 'custom'
-                ? { width: customWidth ? `${customWidth}px` : 'auto' }
-                : undefined
-            }
-          />
-          {showCaptions && img?.caption && (
-            <figcaption className="wpct_gallery__masonry-caption">
-              {img.caption}
-            </figcaption>
-          )}
-        </div>
-      ))}
-    </div>      
-    {showPagination && images.length > itemsPerPage && (
-      <div 
-        className="my-gallery__pagination"
-        data-total-items={images.length}
-        data-items-per-page={itemsPerPage}
-      >
+          {images.map((img, i) => (
+            <div 
+              key={img?.id || i} 
+              className="wpct_masonry_item"
+              style={{ 
+                marginBottom: `${gap}px`,
+                display: showPagination && i >= itemsPerPage ? 'none' : 'block' // Hide items beyond first page initially
+              }}
+              data-index={i}
+            >
+              <img
+                src={
+                  imageSize === 'custom'
+                    ? img?.url
+                    : img?.sizes?.[imageSize]?.url || img?.url
+                }
+                alt={img?.alt || ''}
+                style={
+                  imageSize === 'custom'
+                    ? { width: customWidth ? `${customWidth}px` : 'auto' }
+                    : undefined
+                }
+              />
+              {showCaptions && img?.caption && (
+                <figcaption className="wpct_gallery__masonry-caption"
+                  style={{
+                      backgroundColor: masonryBackgroundColor,
+                      color: masonryCaptionColor,
+                  }}>
+                  {img.caption}
+                </figcaption>
+              )}
+            </div>
+          ))}
+        </div>      
+        {showPagination && images.length > itemsPerPage && (
+          <div 
+            className="my-gallery__pagination"
+            data-total-items={images.length}
+            data-items-per-page={itemsPerPage}
+          >
+          </div>
+        )}
       </div>
-    )}
-  </div>
-  );
-
-}else if (layoutType === 'fancybox') {
+      );
+    
+    }else if (layoutType === 'fancybox') {
     return (
        <div {...blockProps}>
       <div
@@ -555,9 +574,8 @@ export default function save({ attributes }) {
         />
       )}
     </div>
-      );
+    );
 }
-
   // Default fallback (should not reach here)
   return <div {...blockProps}></div>;
 }

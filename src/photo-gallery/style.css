@@ -480,8 +480,6 @@
   padding: 1em;
   text-align: center;
   font-size: 0.9em;
-  color: #666;
-  background: white;
   border-top: 1px solid #eee;
 }
 
@@ -843,7 +841,7 @@
 
 .my-gallery__pagination-btn {
   display: inline-block;
-  padding: 8px 12px;
+  padding: 18px 12px;
   margin: 0 4px;
   background: #f0f0f0;
   border: 1px solid #ddd;

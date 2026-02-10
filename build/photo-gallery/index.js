@@ -72,6 +72,8 @@ function Edit({
     // Masonry Style attributes (additional to existing)
     masonryHoverEffect = 'lift',
     masonryImageOpacity = 1,
+    masonryBackgroundColor = '#000000',
+    masonryCaptionColor = '#ffffff',
     // Infinite Carousel attributes
     alignx = 'center',
     imagepadding = 2,
@@ -271,32 +273,6 @@ function Edit({
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
                   className: "layout-label",
                   children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Fancy Box', 'photoblocks-gallery')
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
-                className: "layout-option is-disabled",
-                disabled: true,
-                type: "button",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                  className: "dashicons dashicons-chart-line"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
-                  className: "layout-label",
-                  children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Wave Gallery', 'photoblocks-gallery'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                    className: "pro-badge",
-                    children: "PRO \uD83D\uDD12"
-                  })]
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("button", {
-                className: "layout-option is-disabled",
-                disabled: true,
-                type: "button",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                  className: "dashicons dashicons-align-center"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
-                  className: "layout-label",
-                  children: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Center', 'photoblocks-gallery'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-                    className: "pro-badge",
-                    children: "PRO \uD83D\uDD12"
-                  })]
                 })]
               })]
             })]
@@ -645,22 +621,60 @@ function Edit({
               })]
             })]
           }), layoutType === 'custom_masonry' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Border Radius (px)'),
-              value: masonryBorderRadius,
-              onChange: value => setAttributes({
-                masonryBorderRadius: value
-              }),
-              min: 0,
-              max: 50
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Image Border Width (px)'),
-              value: masonryImageBorder,
-              onChange: value => setAttributes({
-                masonryImageBorder: value
-              }),
-              min: 0,
-              max: 20
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Background Color')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "color",
+                value: masonryBackgroundColor,
+                onChange: e => setAttributes({
+                  masonryBackgroundColor: e.target.value
+                }),
+                style: {
+                  width: '100%',
+                  height: '32px',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '16px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                style: {
+                  display: 'block',
+                  marginBottom: '4px',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  textTransform: 'uppercase'
+                },
+                children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Caption Color')
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "color",
+                value: masonryCaptionColor,
+                onChange: e => setAttributes({
+                  masonryCaptionColor: e.target.value
+                }),
+                style: {
+                  width: '100%',
+                  height: '32px',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }
+              })]
             }), masonryImageBorder > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
                 label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Border Style'),
@@ -881,30 +895,33 @@ function Edit({
         })
       }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
         children: [layoutType === 'grid' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-          className: "wpct_gallery__grid",
-          style: {
-            '--columns': columns,
-            '--gap': `${gap}px`
-          },
-          children: imagesToDisplay.map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-            className: "wpct_gallery__item",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
-              src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
-              alt: img.alt,
-              style: imageSize === 'custom' ? {
-                width: customWidth ? `${customWidth}px` : 'auto',
-                height: customHeight ? `${customHeight}px` : 'auto'
-              } : undefined
-            }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("figcaption", {
-              style: {
-                backgroundColor: gridBackgroundColor,
-                color: grindCaptionColor,
-                paddingTop: GtBgap,
-                paddingBottom: GtBgap
-              },
-              children: [" ", img.caption]
-            })]
-          }, img.id))
+          className: "style-1",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "wpct_gallery__grid",
+            style: {
+              '--columns': columns,
+              '--gap': `${gap}px`
+            },
+            children: imagesToDisplay.map(img => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "wpct_gallery__item",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                src: imageSize === 'custom' ? img.url : img.sizes?.[imageSize]?.url || img.url,
+                alt: img.alt,
+                style: imageSize === 'custom' ? {
+                  width: customWidth ? `${customWidth}px` : 'auto',
+                  height: customHeight ? `${customHeight}px` : 'auto'
+                } : undefined
+              }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("figcaption", {
+                style: {
+                  backgroundColor: gridBackgroundColor,
+                  color: grindCaptionColor,
+                  paddingTop: GtBgap,
+                  paddingBottom: GtBgap
+                },
+                children: [" ", img.caption]
+              })]
+            }, img.id))
+          })
         }), layoutType === 'lightbox' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
           className: "wpct_gallery__lightbox-grid",
           style: {
@@ -1101,6 +1118,12 @@ function Edit({
               } : undefined
             }), showCaptions && img?.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("figcaption", {
               className: "wpct_gallery__masonry-caption",
+              style: {
+                backgroundColor: masonryBackgroundColor,
+                color: masonryCaptionColor,
+                padding: '15px 10px',
+                textAlign: 'center'
+              },
               children: img.caption
             })]
           }, i))
@@ -1233,6 +1256,8 @@ function save({
     masonryImageBorder = 0,
     masonryImageBorderColor = '#e0e0e0',
     masonryImageBorderStyle = 'solid',
+    masonryBackgroundColor = '#000000',
+    masonryCaptionColor = '#ffffff',
     // Infinite Carousel attributes
     alignx = 'center',
     imagepadding = 2,
@@ -1286,6 +1311,10 @@ function save({
               alt: img.alt || '',
               style: Object.keys(imageStyles).length > 0 ? imageStyles : undefined
             }), showCaptions && img.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("figcaption", {
+              style: {
+                backgroundColor: gridBackgroundColor,
+                color: grindCaptionColor
+              },
               dangerouslySetInnerHTML: {
                 __html: img.caption
               }
@@ -1387,7 +1416,11 @@ function save({
               src: "",
               alt: ""
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-              className: "my-gallery__lightbox-caption"
+              className: "my-gallery__lightbox-caption",
+              style: {
+                backgroundColor: LightBackgroundColor,
+                color: LightCaptionColor
+              }
             })]
           })]
         })]
@@ -1637,6 +1670,10 @@ function save({
             } : undefined
           }), showCaptions && img?.caption && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("figcaption", {
             className: "wpct_gallery__masonry-caption",
+            style: {
+              backgroundColor: masonryBackgroundColor,
+              color: masonryCaptionColor
+            },
             children: img.caption
           })]
         }, img?.id || i))
@@ -1687,7 +1724,6 @@ function save({
       })]
     });
   }
-
   // Default fallback (should not reach here)
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
     ...blockProps

@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Gutenberg PhotoBlocks Gallery
+ * Plugin Name:       Gutenberg PhotoBlocks Gallery Pro
  * Description:       A powerful Gutenberg block for creating responsive and customizable photo galleries with grid, carousel, and lightbox layouts.
  * Version:           1.0.1
  * Requires at least: 6.8
@@ -24,6 +24,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @see https://make.wordpress.org/core/2025/03/13/more-efficient-block-type-registration-in-6-8/
  * @see https://make.wordpress.org/core/2024/10/17/new-block-type-registration-apis-to-improve-performance-in-wordpress-6-7/
  */
+    add_action( 'init', 'wpct_create_block_photo_gallery_init' );
+
 	function wpct_create_block_photo_gallery_init() {
 		/**
 		 * Registers the block(s) metadata from the `blocks-manifest.php` and registers the block type(s)
@@ -57,7 +59,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 	}
 
-	add_action( 'init', 'wpct_create_block_photo_gallery_init' );
+
 
 	function wpct_photo_gallery_block_register_assets() {
 		
