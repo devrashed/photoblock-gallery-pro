@@ -301,12 +301,13 @@ export default function Edit({ attributes, setAttributes }) {
                   options={[
                     { label: 'Slide from Bottom', value: '1' },
                     { label: 'Centered Fade', value: '2' },
-                    { label: 'Slide from Left', value: '3' },
+                    { label: 'Slide from top', value: '3' },
                     { label: 'Fade Overlay', value: '4' },
                     { label: 'Side Slide', value: '5' },
-                    { label: '3D Flip Card', value: '6' },
-                    { label: 'Wave Animation', value: '7' },
-                    { label: 'Circle Reveal', value: '8' }
+                    { label: 'Circle Reveal', value: '6' },
+                    { label: 'Split Screen', value: '7' },
+                    { label: 'Double Border', value: '8' },
+                    { label: '3D Flip Card', value: '9' }
                   ]}
                   onChange={(value) => setAttributes({ captionStyle: value })}
                 />

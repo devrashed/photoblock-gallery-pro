@@ -325,7 +325,7 @@ function Edit({
               label: 'Centered Fade',
               value: '2'
             }, {
-              label: 'Slide from Left',
+              label: 'Slide from top',
               value: '3'
             }, {
               label: 'Fade Overlay',
@@ -334,14 +334,17 @@ function Edit({
               label: 'Side Slide',
               value: '5'
             }, {
-              label: '3D Flip Card',
+              label: 'Circle Reveal',
               value: '6'
             }, {
-              label: 'Wave Animation',
+              label: 'Split Screen',
               value: '7'
             }, {
-              label: 'Circle Reveal',
+              label: 'Double Border',
               value: '8'
+            }, {
+              label: '3D Flip Card',
+              value: '9'
             }],
             onChange: value => setAttributes({
               captionStyle: value
