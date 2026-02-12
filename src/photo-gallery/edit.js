@@ -58,7 +58,6 @@ export default function Edit({ attributes, setAttributes }) {
     masonryBackgroundColor = '#000000',
     masonryCaptionColor = '#ffffff',
   
-
     // Infinite Carousel attributes
     alignx='center',
     imagepadding= 2,
@@ -171,9 +170,7 @@ export default function Edit({ attributes, setAttributes }) {
         </ToolbarGroup>
       </BlockControls>
 
-
       <InspectorControls>
-
         <div className="tab-content-settings">
           <PanelBody title={__('Layout & Display')} initialOpen={true}>
 
@@ -294,24 +291,26 @@ export default function Edit({ attributes, setAttributes }) {
               checked={showCaptions}
               onChange={(value) => setAttributes({ showCaptions: value })}
             />
-            {showCaptions && (
-                <SelectControl
-                  label={__('Caption Style')}
-                  value={captionStyle}
-                  options={[
-                    { label: 'Slide from Bottom', value: '1' },
-                    { label: 'Centered Fade', value: '2' },
-                    { label: 'Slide from top', value: '3' },
-                    { label: 'Fade Overlay', value: '4' },
-                    { label: 'Side Slide', value: '5' },
-                    { label: 'Circle Reveal', value: '6' },
-                    { label: 'Split Screen', value: '7' },
-                    { label: 'Double Border', value: '8' },
-                    { label: '3D Flip Card', value: '9' }
-                  ]}
-                  onChange={(value) => setAttributes({ captionStyle: value })}
-                />
-            )}
+
+          {layoutType !== 'lightbox' && layoutType !== 'imagebrowser' && layoutType !== 'infinite' && layoutType !== 'swiper' && layoutType !== 'fancybox'
+           && showCaptions && (
+              <SelectControl
+                label={__('Caption Style')}
+                value={captionStyle}
+                options={[
+                  { label: 'Slide from Bottom', value: '1' },
+                  { label: 'Centered Fade', value: '2' },
+                  { label: 'Slide from top', value: '3' },
+                  { label: 'Fade Overlay', value: '4' },
+                  { label: 'Side Slide', value: '5' },
+                  { label: 'Circle Reveal', value: '6' },
+                  { label: 'Split Screen', value: '7' },
+                  { label: 'Double Border', value: '8' },
+                ]}
+                onChange={(value) => setAttributes({ captionStyle: value })}
+              />
+            )
+          }  
 
           {layoutType == 'swiper' && (
               <ToggleControl
@@ -428,17 +427,15 @@ export default function Edit({ attributes, setAttributes }) {
                 onChange={(value) => setAttributes({ browserZoomEnabled: value })}
               />
 
-              <ToggleControl
+              {/* <ToggleControl
                 label={__('Auto Fullscreen Mode')}
                 checked={browserAutoFullscreen}
                 onChange={(value) => setAttributes({ browserAutoFullscreen: value })}
-              />
+              /> */}
             </PanelBody>
           )}
         </div>
-
       </InspectorControls>
-
 
       <InspectorControls group='styles'>
 
@@ -705,7 +702,6 @@ export default function Edit({ attributes, setAttributes }) {
           </MediaUploadCheck>
         ) : (
           <Fragment>
-
             {layoutType === 'grid' && (
                   <div className="wpct_gallery__grid"
                     style={{ '--columns': columns, '--gap': `${gap}px` }}>     
@@ -758,14 +754,14 @@ export default function Edit({ attributes, setAttributes }) {
                         <span className="wpct_gallery__lightbox-icon">🔍</span>
                       </div>
                     </div>
-                    {showCaptions && img.caption && (
+                    {/* {showCaptions && img.caption && (
                       <figcaption style={{
                         backgroundColor: LightBackgroundColor,
                         color: LightCaptionColor,
                         paddingTop: LighttBgap,
                         paddingBottom: LighttBgap
                       }}>{img.caption}</figcaption>
-                    )}
+                    )} */}
                   </div>
                 ))}
               </div>
@@ -846,11 +842,11 @@ export default function Edit({ attributes, setAttributes }) {
                   )}
 
                   {/* Fullscreen Control */}
-                  <div className="wpct_gallery__imagebrowser-fullscreen-control">
+                  {/* <div className="wpct_gallery__imagebrowser-fullscreen-control">
                     <Button variant="secondary" className="wpct_gallery__imagebrowser-fullscreen">
                       ⛶
                     </Button>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Thumbnails */}
@@ -889,19 +885,6 @@ export default function Edit({ attributes, setAttributes }) {
                                 height: customHeight ? `${customHeight}px` : 'auto',
                               } : undefined}
                             />
-                            {/* {showCaptions && img.caption && (
-                              <figcaption 
-                                className="wpg-caption" 
-                                style={{
-                                  backgroundColor: ImgbackgroundColor,
-                                  color: ImgCaptionColor,
-                                  textAlign: alignx,
-                                  padding: '6px 10px',
-                                }} 
-                              >
-                                {img.caption}
-                              </figcaption>
-                            )} */}
                         </figure>
                       </li>
                     ))}
@@ -956,21 +939,12 @@ export default function Edit({ attributes, setAttributes }) {
                   '--border-style': masonryImageBorderStyle,
                   '--masonry-hover-effect': masonryHoverEffect,
                   '--masonry-opacity': masonryImageOpacity
-                }}
-                  >
+                }}>
                       {imagesToDisplay.map((img, i) => (
-                          <figure key={i} className="wpct_masonry_item"
-                         
-                          >
-                            <img
-                              src={
-                                imageSize === 'custom'
-                                  ? img?.url
-                                  : img?.sizes?.[imageSize]?.url || img?.url
-                              }
-                              alt={img?.alt || ''}
-                              style={
-                                imageSize === 'custom'
+                    
+                            <figure key={i} className={`style-${captionStyle} wpct_masonry_item`}>
+                            <img src={ imageSize === 'custom' ? img?.url : img?.sizes?.[imageSize]?.url || img?.url }
+                              alt={img?.alt || ''} style={ imageSize === 'custom'
                                   ? {
                                       width: customWidth ? `${customWidth}px` : 'auto',
                                       height: customHeight ? `${customHeight}px` : 'auto',
@@ -978,7 +952,6 @@ export default function Edit({ attributes, setAttributes }) {
                                   : undefined
                               }
                             />
-
                             {showCaptions && img?.caption && (
                               <figcaption className="wpct_gallery__masonry-caption" style={{
                                 backgroundColor: masonryBackgroundColor,

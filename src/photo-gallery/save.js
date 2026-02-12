@@ -6,6 +6,7 @@ export default function save({ attributes }) {
     columns = 3,
     gap = 16,
     showCaptions = true,
+    captionStyle = '1',
     imageSize = 'full',
     customWidth = 0,
     customHeight = 0,
@@ -99,22 +100,22 @@ export default function save({ attributes }) {
               return (
                 <figure 
                   key={img.id || index} 
-                  className="wpct_gallery__item"
+                  className={`style-${captionStyle} wpct_gallery__item`}
                   data-image-id={img.id || index}
                 >
-                  <img
-                    src={imageUrl}
-                    alt={img.alt || ''}
-                    style={Object.keys(imageStyles).length > 0 ? imageStyles : undefined}
-                  />
-                  {showCaptions && img.caption && (
-                    <figcaption 
-                    style={{
-                        backgroundColor: gridBackgroundColor,
-                        color: grindCaptionColor
-                    }}
-                    dangerouslySetInnerHTML={{ __html: img.caption }} />
-                  )}
+                    <img
+                      src={imageUrl}
+                      alt={img.alt || ''}
+                      style={Object.keys(imageStyles).length > 0 ? imageStyles : undefined}
+                    />
+                    {showCaptions && img.caption && (
+                      <figcaption 
+                      style={{
+                          backgroundColor: gridBackgroundColor,
+                          color: grindCaptionColor
+                      }}
+                      dangerouslySetInnerHTML={{ __html: img.caption }} />
+                    )}
                 </figure>
               );
           })}
@@ -131,7 +132,6 @@ export default function save({ attributes }) {
         )}
       </div>
     );
-    
   } else if (layoutType === 'lightbox') {
     return (
       <div {...blockProps}>
@@ -186,15 +186,14 @@ export default function save({ attributes }) {
                       <span className="my-gallery__lightbox-icon">🔍</span>
                     </div>
                   </div>
-                  {showCaptions && img.caption && (
-                                        
+                  {/* {showCaptions && img.caption && (                                        
                      <figcaption style={{ 
                       backgroundColor: LightBackgroundColor, 
                       color: LightCaptionColor,
                       paddingTop:LighttBgap,
                       paddingBottom:LighttBgap }}> {img.caption} </figcaption>
-                  )}
-              </figure>
+                  )} */}
+               </figure>
             );
           })}
         </div>
@@ -349,7 +348,7 @@ export default function save({ attributes }) {
             )}
 
             {/* Fullscreen Control */}
-            <div className="my-gallery__imagebrowser-fullscreen-control">
+            {/* <div className="my-gallery__imagebrowser-fullscreen-control">
               <button 
                 className="my-gallery__imagebrowser-fullscreen"
                 aria-label="Toggle fullscreen"
@@ -359,7 +358,7 @@ export default function save({ attributes }) {
                       <span className="fullscreen-enter"><i className="fas fa-expand"></i></span>
         <span className="fullscreen-exit"><i className="fas fa-times"></i></span>
               </button>
-            </div>
+            </div> */}
           </div>
           
           {/* Thumbnails */}
@@ -457,7 +456,7 @@ export default function save({ attributes }) {
         </div>
     );     
 
-    } else if (layoutType === 'custom_masonry') {
+  } else if (layoutType === 'custom_masonry') {
       return (
         <div {...blockProps}>
         <div 
@@ -470,7 +469,7 @@ export default function save({ attributes }) {
           {images.map((img, i) => (
             <div 
               key={img?.id || i} 
-              className="wpct_masonry_item"
+              className={`style-${captionStyle} wpct_masonry_item`}
               style={{ 
                 marginBottom: `${gap}px`,
                 display: showPagination && i >= itemsPerPage ? 'none' : 'block' // Hide items beyond first page initially
@@ -513,7 +512,7 @@ export default function save({ attributes }) {
       </div>
       );
     
-    }else if (layoutType === 'fancybox') {
+  }else if (layoutType === 'fancybox') {
     return (
        <div {...blockProps}>
       <div
@@ -572,7 +571,9 @@ export default function save({ attributes }) {
       )}
     </div>
     );
-}
+  }
+
+
   // Default fallback (should not reach here)
   return <div {...blockProps}></div>;
 }
